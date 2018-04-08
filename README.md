@@ -28,11 +28,24 @@ Books:
 - Author
 
 ## Setup
+- Create `config/config.exs` with the following content:
+```elixir
+use Mix.Config
 
-- Create a postgres database called 'tracker_repo'
-- Run `mix ecto.gen.repo -r Tracker.Repo`
-- Change DB credentials in config/config.exs as applicable
+config :tracker, Tracker.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "tracker_repo",
+  username: "$POSTGRES_USERNAME",
+  password: "$PASSWORD",
+  hostname: "localhost"
+
+config :tracker, ecto_repos: [Tracker.Repo]
+```
+
+- Create a postgres database by running `mix ecto.create`
 - Run `mix ecto.migrate`
+
+When running in IEX, run `Tracker.Repo.start_link()` in order to be able to connect to postgres
 
 ## Installation
 
