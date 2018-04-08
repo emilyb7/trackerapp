@@ -1,4 +1,4 @@
-defmodule Library.Library do
+defmodule Tracker.Library do
 
   @user_agent [{"User-agent", "example.com"}]
 

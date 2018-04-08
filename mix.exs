@@ -25,7 +25,7 @@ defmodule Tracker.Mixfile do
       httpoison: "~> 0.9",
       poison: "~>2.2",
       ecto: "~> 2.2",
-      postgrex: ">= 0.0.0"
+      postgrex: ">= 0.0.0",
     ]
   end
 end

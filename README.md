@@ -16,7 +16,7 @@ Example url:
 
 Run `iex -S mix`
 
-then `Library.Library.fetch($ISBN)`
+then `Tracker.Library.fetch($ISBN)`
 
 ## DB
 

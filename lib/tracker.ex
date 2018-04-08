@@ -3,30 +3,15 @@ defmodule Tracker do
   Documentation for Tracker.
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Tracker.hello
-      :world
-
-  """
-
   use Application
 
   def start(_type, _args) do
-    import Supervisor.Spec
 
     children = [
-      supervisor(ExampleApp.Repo, [])
+      Friends.Repo,
     ]
 
-    opts = [strategy: :one_for_one, name: ExampleApp.Supervisor]
+    opts = [strategy: :one_for_one, name: Tracker.Supervisor]
     Supervisor.start_link(children, opts)
-  end
-
-  def main do
-    :world
   end
 end
