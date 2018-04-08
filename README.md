@@ -18,6 +18,22 @@ Run `iex -S mix`
 
 then `Library.Library.fetch($ISBN)`
 
+## DB
+
+Books:
+- ID
+- ISBN
+- Title
+- Image
+- Author
+
+## Setup
+
+- Create a postgres database called 'tracker_repo'
+- Run `mix ecto.gen.repo -r Tracker.Repo`
+- Change DB credentials in config/config.exs as applicable
+- Run `mix ecto.migrate`
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed

@@ -20,7 +20,13 @@ defmodule Tracker.Mixfile do
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
-    [exfmt: [github: "lpil/exfmt"], httpoison: "~> 0.9", poison: "~>2.2"]
+    [
+      exfmt: [github: "lpil/exfmt"],
+      httpoison: "~> 0.9",
+      poison: "~>2.2",
+      ecto: "~> 2.2",
+      postgrex: ">= 0.0.0"
+    ]
   end
 end
 # {:dep_from_hexpm, "~> 0.3.0"},
