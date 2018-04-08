@@ -1,6 +1,22 @@
 # Tracker
 
-**TODO: Add description**
+## Things to do
+- Getting book details from third party API ✅
+- Saving books to DB
+- Saving sessions to DB
+- API
+
+## Open library API
+
+Example url:
+
+`http://openlibrary.org/api/books\?bibkeys\=ISBN:9780141439518\&format\=json\&jscmd\=data`
+
+## Get data from API
+
+Run `iex -S mix`
+
+then `Library.Library.fetch($ISBN)`
 
 ## Installation
 
@@ -15,7 +31,6 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
+Documentation can dbe generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/tracker](https://hexdocs.pm/tracker).
-

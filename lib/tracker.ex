@@ -12,7 +12,7 @@ defmodule Tracker do
       :world
 
   """
-  def hello do
+  def main do
     :world
   end
 end
