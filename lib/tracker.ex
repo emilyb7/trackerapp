@@ -8,7 +8,7 @@ defmodule Tracker do
   def start(_type, _args) do
 
     children = [
-      Friends.Repo,
+      Tracker.Repo,
     ]
 
     opts = [strategy: :one_for_one, name: Tracker.Supervisor]
