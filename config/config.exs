@@ -2,7 +2,12 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :tracker, ecto_repos: [Tracker.Repo]
+config :tracker, Tracker.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "tracker_repo",
+  username: "user",
+  password: "pass",
+  hostname: "localhost"
 
 
 # This configuration is loaded before any dependency and is restricted
@@ -23,6 +28,8 @@ config :tracker, ecto_repos: [Tracker.Repo]
 #
 #     config :logger, level: :info
 #
+
+config :tracker, ecto_repos: [Tracker.Repo]
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
