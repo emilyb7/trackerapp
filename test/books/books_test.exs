@@ -1,22 +1,23 @@
 defmodule Tracker.BooksTest do
-  alias Tracker.{Books, Books_Commands, Repo}
+  alias Tracker.{Book, Repo}
 
   use ExUnit.Case
 
   test "adding a book" do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
     previousCount =
-      Books
+      Book
       |> Repo.all()
       |> Enum.count()
-    Books_Commands.create %{
-                            title: "Charlottes Web",
-                            isbn: "9780064400558",
-                            author: "E.B. White",
-                            cover: "https://covers.openlibrary.org/w/id/8156475-M.jpg",
-                          }
+    assert Book.create(%{
+                                   title: "Charlottes Web",
+                                   isbn: "9780064400558",
+                                   author: "E.B. White",
+                                   cover: "https://covers.openlibrary.org/w/id/8156475-M.jpg",
+                                 }) ==
+             :ok
     newCount =
-      Books
+      Book
       |> Repo.all()
       |> Enum.count()
     assert newCount == previousCount + 1

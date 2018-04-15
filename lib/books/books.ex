@@ -1,13 +1,14 @@
-defmodule Tracker.Books do
+defmodule Tracker.Book do
   use Ecto.Schema
-  import Ecto.Changeset # This is the one that includes cast
+  import Ecto.Changeset
+  alias Tracker.Book
 
+  # This is the one that includes cast
   schema "books" do
-    field(:title, :string)
-    field(:isbn, :string)
-    field(:author, :string)
-    field(:cover, :string)
-
+    field :title, :string
+    field :isbn, :string
+    field :author, :string
+    field :cover, :string
     timestamps()
   end
 
@@ -20,4 +21,14 @@ defmodule Tracker.Books do
     |> unique_constraint(:isbn)
   end
 
+  def create(book_params) do
+    changeset = changeset(%Book{}, book_params)
+    case Tracker.Repo.insert(changeset) do
+      {:ok, _record} ->
+        :ok
+
+      {:error, _changeset} ->
+        :error
+    end
+  end
 end
