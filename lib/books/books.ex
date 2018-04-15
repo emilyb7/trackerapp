@@ -2,8 +2,9 @@ defmodule Tracker.Book do
   use Ecto.Schema
 
   import Ecto.Changeset
+  import Ecto.Query
 
-  alias Tracker.Book
+  alias Tracker.{Book, Repo}
 
   # This is the one that includes cast
   schema "books" do
@@ -23,7 +24,8 @@ defmodule Tracker.Book do
 
 
   def get_books(limit \\ 20) do
-    Tracker.Repo.all Book, limit: limit
+    q = from b in Book, limit: ^limit
+    Repo.all(q)
   end
 
 

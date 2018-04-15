@@ -14,7 +14,11 @@ defmodule Tracker.Mixfile do
 
   # Run "mix help compile.app" to learn about applications.
   def application do
-    [extra_applications: [:logger, :httpoison], mod: {Tracker, []}]
+    [
+      extra_applications: [:logger, :httpoison],
+      mod: {Server, []},
+      env: [cowboy_port: 8080],
+    ]
   end
 
 
@@ -26,6 +30,8 @@ defmodule Tracker.Mixfile do
       poison: "~>2.2",
       ecto: "~> 2.2",
       postgrex: ">= 0.0.0",
+      cowboy: "~> 1.1.2",
+      plug: "~> 1.3.4"
     ]
   end
 end
