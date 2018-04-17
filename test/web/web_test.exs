@@ -27,9 +27,12 @@ defmodule Router.Test do
     conn =
       conn(:get, "/books", "")
       |> Router.call(@opts)
+
+    res = Poison.Parser.parse!(conn.resp_body)
+
     assert conn.state === :sent
     assert conn.status === 200
-    # res = Poison.Parser.parse!(conn.resp_body)
-    # IO.inspect(is_binary res)
+    assert Enum.count(res) === 1
+    assert res |> Enum.at(0) |> Map.get("title") === test_book.title
   end
 end
