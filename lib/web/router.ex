@@ -16,8 +16,13 @@ defmodule Router do
     |> send_resp(200, books)
   end
   post "/books/create" do
-    conn.params |> Tracker.Book.create
-    send_resp conn, 200, "thank you"
+    case conn.params do
+      %{"title" => _, "author" => _} ->
+        Tracker.Book.create conn.params
+        send_resp conn, 200, "thank you"
+      _ -> send_resp conn, 400, "invalid payload"
+    end
+
   end
   match _ do
     send_resp conn, 404, "oops"

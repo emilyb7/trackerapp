@@ -41,10 +41,18 @@ defmodule Router.Test do
       conn(:post, "/books/create", test_book)
       |> put_req_header("content-type", "application/json")
       |> Router.call(@opts)
-
     assert conn.state === :sent
     assert conn.status === 200
-    [ res ] = Book.get_books
-    assert res.author === Poison.decode!(test_book) |> Map.get("author")
+    [res] = Book.get_books()
+    assert res.author === Poison.decode!(test_book)
+             |> Map.get("author")
+  end
+  test "/books/create throws 400 with invalid payload" do
+    conn =
+      conn(:post, "/books/create", "")
+      |> put_req_header("content-type", "application/json")
+      |> Router.call(@opts)
+    assert conn.state === :sent
+    assert conn.status === 400
   end
 end
