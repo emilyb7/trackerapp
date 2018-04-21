@@ -23,16 +23,28 @@ defmodule Router.Test do
       author: "E.B. White",
       cover: "https://covers.openlibrary.org/w/id/8156475-M.jpg",
     }
-    Book.create(test_book)
+    Book.create test_book
     conn =
       conn(:get, "/books", "")
       |> Router.call(@opts)
-
     res = Poison.Parser.parse!(conn.resp_body)
-
     assert conn.state === :sent
     assert conn.status === 200
     assert Enum.count(res) === 1
-    assert res |> Enum.at(0) |> Map.get("title") === test_book.title
+    assert res
+             |> Enum.at(0)
+             |> Map.get("title") === test_book.title
+  end
+  test "/books/create adds book to DB" do
+    test_book = File.read!("test/test-data/example.json")
+    conn =
+      conn(:post, "/books/create", test_book)
+      |> put_req_header("content-type", "application/json")
+      |> Router.call(@opts)
+
+    assert conn.state === :sent
+    assert conn.status === 200
+    [ res ] = Book.get_books
+    assert res.author === Poison.decode!(test_book) |> Map.get("author")
   end
 end
