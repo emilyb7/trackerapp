@@ -18,6 +18,12 @@ Run `iex -S mix`
 
 then `Tracker.Library.fetch($ISBN)`
 
+##API
+
+Example of creating book data: 
+
+`curl -d '{"title":"Emma", "author":"Jane Austen"}' -H "Content-Type: application/json" -X POST http://localhost:8080/books/create`
+
 ## DB
 
 Books:
