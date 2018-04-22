@@ -5,9 +5,7 @@ defmodule Server do
   def start(_type, _args) do
     port = System.get_env("PORT") |> String.to_integer
 
-    Logger.info(port)
-
-    children = [Plug.Adapters.Cowboy.child_spec(:http, Router, port: port), Tracker.Repo]
+    children = [Plug.Adapters.Cowboy.child_spec(scheme: :http, plug: Router, options: [port: port]), Tracker.Repo]
 
     Logger.info(inspect Tracker.Repo)
 

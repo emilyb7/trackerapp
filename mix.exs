@@ -30,8 +30,8 @@ defmodule Tracker.Mixfile do
       poison: "~>2.2",
       ecto: "~> 2.2",
       postgrex: ">= 0.0.0",
-      cowboy: "~> 1.1.2",
-      plug: "~> 1.3.4"
+      cowboy: "~> 1.0.0",
+      plug: "~> 1.0"
     ]
   end
 end
