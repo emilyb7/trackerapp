@@ -17,7 +17,8 @@ defmodule Tracker.Mixfile do
     [
       extra_applications: [:logger, :httpoison],
       mod: {Server, []},
-      env: [cowboy_port: 8080],
+      build_embedded: Mix.env == :prod,
+      start_permanent: Mix.env == :prod
     ]
   end
 
