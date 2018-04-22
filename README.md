@@ -14,13 +14,13 @@ Example url:
 
 ## Get data from API
 
-Run `iex -S mix`
+Run `PORT=8080 iex -S mix`
 
 then `Tracker.Library.fetch($ISBN)`
 
 ##API
 
-Example of creating book data: 
+Example of creating book data:
 
 `curl -d '{"title":"Emma", "author":"Jane Austen"}' -H "Content-Type: application/json" -X POST http://localhost:8080/books/create`
 
@@ -52,6 +52,8 @@ config :tracker, ecto_repos: [Tracker.Repo]
 - Run `mix ecto.migrate`
 
 When running in IEX, run `Tracker.Repo.start_link()` in order to be able to connect to postgres
+
+To run on localhost: `PORT=8080 mix run --no-halt`
 
 ## Installation
 
