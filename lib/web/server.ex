@@ -3,13 +3,13 @@ defmodule Server do
   require Logger
 
   def start(_type, _args) do
-    Logger.info("STARTING!")
-    import Supervisor.Spec
-
-    port = System.get_env("PORT")
+    port = System.get_env("PORT") |> String.to_integer
 
     Logger.info(port)
+
     children = [Plug.Adapters.Cowboy.child_spec(:http, Router, port: port), Tracker.Repo]
+
+    Logger.info(inspect Tracker.Repo)
 
     Logger.info("started application")
     Supervisor.start_link(children, strategy: :one_for_one)
