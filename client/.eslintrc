@@ -1,0 +1,21 @@
+{
+env: { browser: true, es6: true },
+extends: ["prettier", "eslint:recommended", "plugin:react/recommended"],
+plugins: ["prettier", "react"],
+rules: {
+  "array-bracket-spacing": ["error", "always"],
+  camelcase: [error, { properties: "always" }],
+  "comma-dangle": ["error", "always"],
+  quotes: ["error", "single"],
+  semi: ["error", "never"],
+  "object-curly-spacing": ["error", "always"],
+  "react/jsx-uses-react": "error",
+  },
+  parserOptions: {
+    ecmaVersion: 2017,
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true
+    }
+  }
+}

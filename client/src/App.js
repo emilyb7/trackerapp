@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import "./App.css";
-import BarcodeReader from "./BarcodeReader";
+import React, { Component, } from 'react'
+import './App.css'
+import BarcodeReader from './BarcodeReader'
 
 class App extends Component {
   render() {
@@ -12,8 +12,8 @@ class App extends Component {
 
         <BarcodeReader />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
