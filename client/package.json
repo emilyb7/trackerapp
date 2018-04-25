@@ -12,6 +12,7 @@
     "react-scripts": "1.1.4"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "quagga": "^0.12.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"

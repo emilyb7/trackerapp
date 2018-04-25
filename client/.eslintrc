@@ -1,5 +1,5 @@
 {
-env: { browser: true, es6: true },
+env: { browser: true, es6: true, node: true },
 extends: ["prettier", "eslint:recommended", "plugin:react/recommended"],
 plugins: ["prettier", "react"],
 rules: {
@@ -10,10 +10,20 @@ rules: {
   semi: ["error", "never"],
   "object-curly-spacing": ["error", "always"],
   "react/jsx-uses-react": "error",
+  "react/jsx-uses-vars": 1,
+  "react/react-in-jsx-scope": 1,
+  "react/jsx-no-bind": [
+            2,
+            {
+                "ignoreRefs": false,
+                "allowArrowFunctions": false,
+                "allowBind": false
+            }
+        ]
   },
-  "parser": "babel-eslint",
+  parser: "babel-eslint",
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 6,
     sourceType: "module",
     ecmaFeatures: {
       jsx: true
