@@ -6,9 +6,10 @@ class BarcodeReader extends React.Component {
     super(props)
     this.state = { result: null, }
   }
+
   componentDidMount = () => {
     this.init()
-  };
+  }
   componentDidUpdate = () => console.log(this.state) //eslint-disable-line no-console
 
   init = () => {
@@ -33,18 +34,18 @@ class BarcodeReader extends React.Component {
       }
     )
     Quagga.onDetected(this.onDetected)
-  };
+  }
 
   onDetected = data => {
     console.log(data) //eslint-disable-line no-console
     this.setState({ result: data.codeResult.code, })
-  };
+  }
 
   stop = () => {
     Quagga.stop()
-  };
+  }
 
-  render = () =>
+  render = () => (
     <div style={{ position: 'relative', }}>
       <span id="target">Read me</span>
       <span
@@ -53,7 +54,8 @@ class BarcodeReader extends React.Component {
       >
         stop
       </span>
-    </div>;
+    </div>
+  )
 }
 
 export default BarcodeReader
