@@ -3,13 +3,13 @@ defmodule Tracker.Library do
   @user_agent [{"User-agent", "example.com"}]
 
   def fetch(isbn) do
-    issues_url(isbn)
+    library_url(isbn)
     |> HTTPoison.get(@user_agent)
     |> handle_response
   end
 
 
-  def issues_url(isbn) do
+  def library_url(isbn) do
     IO.puts "getting url"
     "http://openlibrary.org/api/books\?bibkeys\=ISBN:#{isbn}\&format\=json\&jscmd\=data"
   end

@@ -25,6 +25,19 @@ defmodule Router do
     end
 
   end
+  get "/lookup" do
+    case conn.params do
+      %{"isbn" => isbn} ->
+        case Tracker.Library.fetch(isbn) do
+          {:ok, data} ->
+            conn
+            |> put_resp_content_type("application/json")
+            |> send_resp(200, Poison.encode! data)
+          _ -> send_resp conn, 404, "not found"
+        end
+        _ -> send_resp conn, 400, "invalid params"
+    end
+  end
   match _ do
     send_resp conn, 404, "oops"
   end

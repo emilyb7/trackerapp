@@ -55,4 +55,15 @@ defmodule Router.Test do
     assert conn.state === :sent
     assert conn.status === 400
   end
+  test "/lookup returns valid data from API" do
+    isbn = "9780345505101"
+    conn =
+      conn(:get, "/lookup?isbn=" <> isbn, "")
+      |> Router.call(@opts)
+    assert conn.state === :sent
+    assert conn.status === 200
+
+    # data = conn.resp_body |> Poison.decode!
+
+  end
 end
