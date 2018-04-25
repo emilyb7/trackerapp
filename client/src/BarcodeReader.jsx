@@ -4,12 +4,13 @@ import Quagga from 'quagga'
 class BarcodeReader extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { result: null, }
+    this.state = { results: [], }
   }
 
   componentDidMount = () => {
     this.init()
   }
+
   componentDidUpdate = () => console.log(this.state) //eslint-disable-line no-console
 
   init = () => {
@@ -21,7 +22,7 @@ class BarcodeReader extends React.Component {
           target: document.querySelector('#target'),
         },
         decoder: {
-          readers: [ 'code_128_reader', 'ean_reader', ],
+          readers: [ 'ean_reader', ],
         },
       },
       function(err) {
@@ -37,8 +38,8 @@ class BarcodeReader extends React.Component {
   }
 
   onDetected = data => {
-    console.log(data) //eslint-disable-line no-console
-    this.setState({ result: data.codeResult.code, })
+    const code = data.codeResult.code
+    this.setState({ results: [ ...this.state.results, code, ], })
   }
 
   stop = () => {
