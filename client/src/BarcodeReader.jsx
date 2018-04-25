@@ -1,17 +1,26 @@
 import React from 'react'
 import Quagga from 'quagga'
+import { get, } from './api'
 
 class BarcodeReader extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { results: [], }
+    this.state = { results: [], match: null, }
   }
 
   componentDidMount = () => {
     this.init()
   }
 
-  componentDidUpdate = () => console.log(this.state) //eslint-disable-line no-console
+  componentDidUpdate = (_, prevstate) => {
+    if (this.state.match && !prevstate.match) {
+      const code = this.state.match
+      console.log({ code, })
+      get('/lookup?isbn=' + code)
+        .then(console.log)
+        .catch(console.log)
+    }
+  }
 
   init = () => {
     Quagga.init(
@@ -39,9 +48,16 @@ class BarcodeReader extends React.Component {
 
   onDetected = data => {
     const code = data.codeResult.code
+    if (this.state.results.indexOf(code) > -1) {
+      this.findMatch(code)
+      return
+    }
     this.setState({ results: [ ...this.state.results, code, ], })
   }
 
+  findMatch = code => {
+    this.setState({ ...this.state, match: code, })
+  }
   stop = () => {
     Quagga.stop()
   }
