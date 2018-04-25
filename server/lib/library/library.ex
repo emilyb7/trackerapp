@@ -22,7 +22,7 @@ defmodule Tracker.Library do
     body = Poison.decode!(body) |> Map.values |> Enum.at(0)
     title = Map.fetch!(body, "title")
     author = Map.fetch!(body, "authors") |> Enum.at(0) |> Map.fetch!("name")
-    cover = Map.fetch!(body, "cover") |> Map.fetch!("medium")
+    cover = get_cover(body)
     isbn = Map.fetch!(body, "identifiers") |> Map.fetch!("isbn_13") |> Enum.at(0)
 
     response = %{
@@ -37,5 +37,13 @@ defmodule Tracker.Library do
 
   def handle_response({_, %{status_code: _, body: body}}) do
     {:error, Poison.Parser.parse!(body)}
+  end
+
+  def get_cover(book_data) do
+    case Map.fetch(book_data, "cover") do
+      {:ok, cover} ->
+         Map.fetch!(cover, "medium")
+      :error -> nil
+    end
   end
 end
