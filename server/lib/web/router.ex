@@ -2,6 +2,7 @@ defmodule Router do
   use Plug.Router
   require Logger
 
+  plug CORSPlug
   plug Plug.Parsers, parsers: [:urlencoded, :json], json_decoder: Poison
   plug :match
   plug :dispatch

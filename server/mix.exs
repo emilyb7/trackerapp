@@ -31,7 +31,8 @@ defmodule Tracker.Mixfile do
       ecto: "~> 2.2",
       postgrex: ">= 0.0.0",
       cowboy: "~> 1.0.0",
-      plug: "~> 1.0"
+      plug: "~> 1.0",
+      cors_plug: "~> 1.5"
     ]
   end
 end
