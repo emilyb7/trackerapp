@@ -1,6 +1,5 @@
 import React from 'react'
 import Quagga from 'quagga'
-import { get, } from './api'
 
 class BarcodeReader extends React.Component {
   constructor(props) {
@@ -15,10 +14,7 @@ class BarcodeReader extends React.Component {
   componentDidUpdate = (_, prevstate) => {
     if (this.state.match && !prevstate.match) {
       const code = this.state.match
-      console.log({ code, })
-      get('/lookup?isbn=' + code)
-        .then(console.log)
-        .catch(console.log)
+      this.props.updateQuery(code)
     }
   }
 
