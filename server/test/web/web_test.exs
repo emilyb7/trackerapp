@@ -63,7 +63,8 @@ defmodule Router.Test do
     assert conn.state === :sent
     assert conn.status === 200
 
-    # data = conn.resp_body |> Poison.decode!
+    data = conn.resp_body |> Poison.decode!
+    assert Map.fetch!(data, "isbn") === isbn
 
   end
 end
