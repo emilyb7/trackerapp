@@ -1,10 +1,12 @@
 import React from 'react'
 import Quagga from 'quagga'
 
+import isbnValidator from './isbn-validator'
+
 class BarcodeReader extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { results: [], match: null, }
+    this.state = { match: null, }
   }
 
   componentDidMount = () => {
@@ -44,16 +46,12 @@ class BarcodeReader extends React.Component {
 
   onDetected = data => {
     const code = data.codeResult.code
-    if (this.state.results.indexOf(code) > -1) {
-      this.findMatch(code)
-      return
+    if (isbnValidator(code)) {
+      this.setState({ match: code, })
+      this.stop()
     }
-    this.setState({ results: [ ...this.state.results, code, ], })
   }
 
-  findMatch = code => {
-    this.setState({ ...this.state, match: code, })
-  }
   stop = () => {
     Quagga.stop()
   }
