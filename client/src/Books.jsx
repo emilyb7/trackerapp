@@ -23,11 +23,12 @@ class Books extends React.Component {
 
   render() {
     return (
-      <ul>
+      <ul className="h-100 bg-washed-green gray">
         {this.state.books.map(book => (
-          <li key={book.id}>
-            <div>
-              <h3>{book.title}</h3>
+          <li key={book.id} className="list">
+            <div className="pa2 pb3">
+              <h3 className="ma2">{book.title}</h3>
+              <span className="ma2">{book.author}</span>
             </div>
           </li>
         ))}

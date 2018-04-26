@@ -57,8 +57,8 @@ class BarcodeReader extends React.Component {
   }
 
   render = () => (
-    <div style={{ position: 'relative', }}>
-      <span id="target">Read me</span>
+    <div className="absolute h-50 z-9999 bottom-0 bg-light-green w-100">
+      <div id="target">Read me</div>
       <span
         onClick={this.stop}
         style={{ position: 'absolute', top: 0, right: 0, }}

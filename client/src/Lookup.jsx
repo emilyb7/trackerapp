@@ -15,7 +15,7 @@ class Lookup extends React.Component {
     }
   }
 
-  render = () => <div>lookup!</div>
+  render = () => <span />
 }
 
 export default Lookup
