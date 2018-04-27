@@ -17,6 +17,10 @@ class App extends Component {
     this.setState({ ...this.state, barcodeReader: true, })
   }
 
+  hideBarcodeReader = () => {
+    this.setState({ ...this.state, barcodeReader: false, })
+  }
+
   render() {
     return (
       <div className="h-100 relative">
@@ -26,7 +30,10 @@ class App extends Component {
         <Books />
 
         {this.state.barcodeReader && (
-          <BarcodeReader updateQuery={this.updateQuery} />
+          <BarcodeReader
+            updateQuery={this.updateQuery}
+            hideBarcodeReader={this.hideBarcodeReader}
+          />
         )}
         <div className="fixed bottom-0 z-999 pa3 bg-light-green w-100 tc">
           <button className="gray" onClick={this.showBarcodeReader}>

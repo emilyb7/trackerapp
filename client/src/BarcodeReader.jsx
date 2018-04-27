@@ -53,7 +53,12 @@ class BarcodeReader extends React.Component {
   }
 
   stop = () => {
+    this.props.hideBarcodeReader()
     Quagga.stop()
+  }
+
+  componentWillUnmount = () => {
+    this.stop()
   }
 
   render = () => (
@@ -63,7 +68,7 @@ class BarcodeReader extends React.Component {
         onClick={this.stop}
         style={{ position: 'absolute', top: 0, right: 0, }}
       >
-        stop
+        Cancel
       </span>
     </div>
   )
