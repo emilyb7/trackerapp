@@ -1,27 +1,25 @@
 import React, { Component, } from 'react'
+import { BrowserRouter, Route, Switch, } from 'react-router-dom'
 import BarcodeReader from './BarcodeReader'
 import Books from './Books'
 import Lookup from './Lookup'
+import AddButton from './AddButton'
 
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { query: null, barcodeReader: false, }
+    this.state = { query: null, }
   }
 
   updateQuery = code => {
     this.setState({ ...this.state, query: code, })
   }
 
-  showBarcodeReader = () => {
-    this.setState({ ...this.state, barcodeReader: true, })
-  }
-
-  hideBarcodeReader = () => {
-    this.setState({ ...this.state, barcodeReader: false, })
-  }
-
   render() {
+    const BarcodeReaderWrapped = () => (
+      <BarcodeReader updateQuery={this.updateQuery} />
+    )
+
     return (
       <div className="h-100 relative">
         <header className="bg-light-green gray pa3 tc">
@@ -30,16 +28,14 @@ class App extends Component {
         <Books />
 
         {this.state.barcodeReader && (
-          <BarcodeReader
-            updateQuery={this.updateQuery}
-            hideBarcodeReader={this.hideBarcodeReader}
-          />
+          <BarcodeReader updateQuery={this.updateQuery} />
         )}
-        <div className="fixed bottom-0 z-999 pa3 bg-light-green w-100 tc">
-          <button className="gray" onClick={this.showBarcodeReader}>
-            Add book
-          </button>
-        </div>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={AddButton} />
+            <Route path="/scan" component={BarcodeReaderWrapped} />
+          </Switch>
+        </BrowserRouter>
         <Lookup query={this.state.query} />
       </div>
     )
