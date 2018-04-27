@@ -1,6 +1,6 @@
 import React from 'react'
 import Quagga from 'quagga'
-import { Link, } from 'react-router-dom'
+import { Link, Redirect, } from 'react-router-dom'
 
 import isbnValidator from './isbn-validator'
 
@@ -12,13 +12,6 @@ class BarcodeReader extends React.Component {
 
   componentDidMount = () => {
     this.init()
-  }
-
-  componentDidUpdate = (_, prevstate) => {
-    if (this.state.match && !prevstate.match) {
-      const code = this.state.match
-      this.props.updateQuery(code)
-    }
   }
 
   init = () => {
@@ -48,6 +41,7 @@ class BarcodeReader extends React.Component {
   onDetected = data => {
     const code = data.codeResult.code
     if (isbnValidator(code)) {
+      // audio effects or something
       this.setState({ match: code, })
       this.stop()
     }
@@ -61,14 +55,17 @@ class BarcodeReader extends React.Component {
     this.stop()
   }
 
-  render = () => (
-    <div className="absolute h-50 z-9999 bottom-0 bg-light-green w-100">
-      <div id="target">Read me</div>
-      <Link to="/">
-        <span style={{ position: 'absolute', top: 0, right: 0, }}>Cancel</span>
-      </Link>
-    </div>
-  )
+  render = () =>
+    !this.state.match ? (
+      <div className="absolute h-50 z-9999 bottom-0 bg-light-green w-100">
+        <div id="target">Read me</div>
+        <Link to="/">
+          <span style={{ position: 'absolute', top: 0, right: 0, }}>Cancel</span>
+        </Link>
+      </div>
+    ) : (
+      <Redirect to={`/lookup/${this.state.match}`} />
+    )
 }
 
 export default BarcodeReader

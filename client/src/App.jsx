@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { BrowserRouter, Route, Switch, } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, withRouter, } from 'react-router-dom'
 import BarcodeReader from './BarcodeReader'
 import Books from './Books'
 import Lookup from './Lookup'
@@ -11,9 +11,9 @@ class App extends Component {
     this.state = { query: null, }
   }
 
-  updateQuery = code => {
-    this.setState({ ...this.state, query: code, })
-  }
+  // updateQuery = code => {
+  //   this.setState({ ...this.state, query: code, })
+  // }
 
   render() {
     const BarcodeReaderWrapped = () => (
@@ -27,16 +27,13 @@ class App extends Component {
         </header>
         <Books />
 
-        {this.state.barcodeReader && (
-          <BarcodeReader updateQuery={this.updateQuery} />
-        )}
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={AddButton} />
             <Route path="/scan" component={BarcodeReaderWrapped} />
+            <Route path="/lookup/:isbn" component={withRouter(Lookup)} />
           </Switch>
         </BrowserRouter>
-        <Lookup query={this.state.query} />
       </div>
     )
   }
