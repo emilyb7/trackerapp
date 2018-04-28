@@ -5,6 +5,7 @@ import { get, } from '../api'
 import validateIsbn from '../isbn-validator'
 
 import Panel from './Panel'
+import Result from './Result'
 
 class Lookup extends React.Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class Lookup extends React.Component {
     ) : this.state.notFound ? (
       <p>Not found</p>
     ) : (
-      <p>{JSON.stringify(this.state.data)}</p>
+      <Result data={this.state.data} />
     )
 
     return <Panel>{component}</Panel>

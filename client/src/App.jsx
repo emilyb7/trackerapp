@@ -11,10 +11,6 @@ class App extends Component {
     this.state = { query: null, }
   }
 
-  // updateQuery = code => {
-  //   this.setState({ ...this.state, query: code, })
-  // }
-
   render() {
     const BarcodeReaderWrapped = () => (
       <BarcodeReader updateQuery={this.updateQuery} />
