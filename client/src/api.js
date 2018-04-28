@@ -5,8 +5,7 @@ const get = url =>
   Axios.get(config.server + url)
     .then(res => res.data)
     .catch(err => {
-      console.log(err)
-      Promise.reject('error in fetch')
+      throw err
     })
 
 const post = (url, options = {}) =>

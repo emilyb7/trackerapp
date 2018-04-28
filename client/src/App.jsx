@@ -2,7 +2,7 @@ import React, { Component, } from 'react'
 import { BrowserRouter, Route, Switch, withRouter, } from 'react-router-dom'
 import BarcodeReader from './BarcodeReader'
 import Books from './Books'
-import Lookup from './Lookup'
+import Lookup from './Lookup/index.jsx'
 import AddButton from './AddButton'
 
 class App extends Component {
