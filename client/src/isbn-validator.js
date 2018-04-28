@@ -8,7 +8,8 @@ const validateStart = isbn => isbn.startsWith('978')
 const validateSequence = isbn => {
   const sum = isbn
     .split('')
-    .map((n, i) => parseInt(n, 10) * i * (i % 2 === 0 ? 1 : 3))
+    .slice(0, 12)
+    .map((n, i) => parseInt(n, 10) * (i % 2 === 0 ? 1 : 3))
     .reduce((a, b) => a + b)
 
   const mod = sum % 10
