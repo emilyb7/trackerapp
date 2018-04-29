@@ -26,3 +26,11 @@ ul {
 #root {
   height: 100%;
 }
+
+.vh-10 {
+  height: 10vh;
+}
+
+.vh-80 {
+  height: 80vh;
+}
