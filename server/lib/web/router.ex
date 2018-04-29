@@ -16,15 +16,16 @@ defmodule Router do
     |> put_resp_content_type("application/json")
     |> send_resp(200, books)
   end
+
   post "/books/create" do
-    case conn.params do
+    case conn.body_params do
       %{"title" => _, "author" => _} ->
         Tracker.Book.create conn.params
         send_resp conn, 200, "thank you"
       _ -> send_resp conn, 400, "invalid payload"
     end
-
   end
+
   get "/lookup" do
     case conn.params do
       %{"isbn" => isbn} ->
