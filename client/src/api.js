@@ -11,6 +11,8 @@ const get = url =>
 const post = (url, options = {}) =>
   Axios.post(config.server + url, options)
     .then(res => res.data)
-    .catch(Promise.reject)
+    .catch(err => {
+      throw err
+    })
 
 export { get, post, }

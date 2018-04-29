@@ -1,5 +1,7 @@
 import React from 'react'
 
+import AddBook from '../AddBook/index.jsx'
+
 const Result = ({ data: { title, author, ...rest }, }) => (
   <div className="flex flex-row">
     <div className="flex-auto">
@@ -7,7 +9,7 @@ const Result = ({ data: { title, author, ...rest }, }) => (
       <p>{author}</p>
     </div>
     <div className="flex-auto">
-      <button className="gray">Add to library</button>
+      <AddBook data={{ title, author, ...rest, }} />
     </div>
   </div>
 )
