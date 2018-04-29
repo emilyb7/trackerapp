@@ -23,7 +23,7 @@ const validator = (
 ) => {
   if (fns.length === 0) return true
   if (fns[0](isbn) === false) {
-    console.log(isbn, fns[0].name)
+    console.log(isbn, fns[0].name) // eslint-disable-line no-console
     return false
   }
   return validator(isbn, fns.slice(1))

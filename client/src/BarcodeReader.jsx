@@ -7,11 +7,16 @@ import isbnValidator from './isbn-validator'
 class BarcodeReader extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { match: null, }
+    this.state = { initialised: false, match: null, }
   }
 
   componentDidMount = () => {
     this.init()
+  }
+
+  onInitSuccess = () => {
+    this.setState({ ...this.state, initialised: true, })
+    Quagga.start()
   }
 
   init = () => {
@@ -26,13 +31,12 @@ class BarcodeReader extends React.Component {
           readers: [ 'ean_reader', ],
         },
       },
-      function(err) {
+      err => {
         if (err) {
           console.log(err) //eslint-disable-line no-console
           return
         }
-        console.log('Initialization finished. Ready to start') //eslint-disable-line no-console
-        Quagga.start()
+        this.onInitSuccess()
       }
     )
     Quagga.onDetected(this.onDetected)
@@ -55,17 +59,25 @@ class BarcodeReader extends React.Component {
     this.stop()
   }
 
-  render = () =>
-    !this.state.match ? (
-      <div className="absolute h-50 z-9999 bottom-0 bg-light-green w-100">
-        <div id="target">Read me</div>
-        <Link to="/">
-          <span style={{ position: 'absolute', top: 0, right: 0, }}>Cancel</span>
-        </Link>
+  render = () => {
+    if (this.state.match) return <Redirect to={`/lookup/${this.state.match}`} />
+    return (
+      <div className="absolute h-50 z-999 bottom-0 bg-light-green w-100">
+        <span id="target" />
+        {this.state.initialised ? (
+          <div>
+            <Link to="/">
+              <span className="absolute top-0 right-0">Cancel</span>
+            </Link>
+          </div>
+        ) : (
+          <div>
+            <span>...initialising</span>
+          </div>
+        )}
       </div>
-    ) : (
-      <Redirect to={`/lookup/${this.state.match}`} />
     )
+  }
 }
 
 export default BarcodeReader
