@@ -12,5 +12,6 @@ const config = {
 export default () => {
   const NODE_ENV = process.env.NODE_ENV
   const documentConfig = JSON.parse(document.getElementById('config').value)
+  console.log({ documentConfig, })
   return Object.assign({}, defaults, config[NODE_ENV], documentConfig)
 }
