@@ -12,5 +12,6 @@ const config = {
 export default () => {
   const NODE_ENV = process.env.NODE_ENV
   const env = process.env
+  console.log({ env, NODE_ENV, })
   return Object.assign({}, defaults, config[NODE_ENV], env)
 }
