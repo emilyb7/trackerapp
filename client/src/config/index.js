@@ -10,6 +10,7 @@ const config = {
 }
 
 export default () => {
-  const env = process.env.NODE_ENV
-  return Object.assign({}, defaults, config[env])
+  const NODE_ENV = process.env.NODE_ENV
+  const env = process.env
+  return Object.assign({}, defaults, config[NODE_ENV], env)
 }
