@@ -20,3 +20,5 @@ server/erl_crash.dump
 *.ez
 
 server/config/prod.exs
+client/src/config/production.json
+.netlify
