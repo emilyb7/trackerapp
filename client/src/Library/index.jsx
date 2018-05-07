@@ -1,5 +1,6 @@
 import React from 'react'
 import Tile from './Tile'
+import AddButton from '../AddButton'
 
 const Library = ({ books, }) => {
   return (
@@ -7,6 +8,7 @@ const Library = ({ books, }) => {
       <ul className="content-start flex flex-wrap justify-start h-100">
         {books && books.map(book => <Tile key={book.id} {...book} />)}
       </ul>
+      <AddButton />
     </div>
   )
 }

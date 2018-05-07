@@ -3,6 +3,7 @@ import Quagga from 'quagga'
 import { Link, Redirect, } from 'react-router-dom'
 
 import isbnValidator from './isbn-validator'
+import Scan from './Scan'
 
 class BarcodeReader extends React.Component {
   constructor(props) {
@@ -61,22 +62,7 @@ class BarcodeReader extends React.Component {
 
   render = () => {
     if (this.state.match) return <Redirect to={`/lookup/${this.state.match}`} />
-    return (
-      <div className="absolute h-50 z-999 bottom-0 bg-light-green w-100">
-        <span id="target" />
-        {this.state.initialised ? (
-          <div>
-            <Link to="/">
-              <span className="absolute top-0 right-0">Cancel</span>
-            </Link>
-          </div>
-        ) : (
-          <div>
-            <span>...initialising</span>
-          </div>
-        )}
-      </div>
-    )
+    return <Scan initialised={this.state.initialised} />
   }
 }
 

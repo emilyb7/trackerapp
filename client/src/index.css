@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+canvas {
+  height: 1px;
+}
+
 h1,
 h2,
 h3,

@@ -19,17 +19,13 @@ class App extends Component {
 
     return (
       <BrowserRouter>
-        <div className="code h-100 relative">
+        <div className="code">
           <Nav />
-          <div className="relative">
-            <Books />
-
-            <Switch>
-              <Route exact path="/" component={AddButton} />
-              <Route path="/scan" component={BarcodeReaderWrapped} />
-              <Route path="/lookup/:isbn" component={withRouter(Lookup)} />
-            </Switch>
-          </div>
+          <Switch>
+            <Route exact path="/" component={Books} />
+            <Route path="/scan" component={BarcodeReaderWrapped} />
+            <Route path="/lookup/:isbn" component={withRouter(Lookup)} />
+          </Switch>
         </div>
       </BrowserRouter>
     )
