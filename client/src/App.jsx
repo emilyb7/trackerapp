@@ -4,6 +4,7 @@ import BarcodeReader from './BarcodeReader'
 import Books from './Books'
 import Lookup from './Lookup/index.jsx'
 import AddButton from './AddButton'
+import Nav from './Nav'
 
 class App extends Component {
   constructor(props) {
@@ -17,20 +18,18 @@ class App extends Component {
     )
 
     return (
-      <div className="h-100 relative">
-        <header className="bg-light-green gray pa3 tc">
-          <h1 className="App-title">Tracker app</h1>
-        </header>
-        <Books />
+      <BrowserRouter>
+        <div className="code h-100 relative">
+          <Nav />
+          <Books />
 
-        <BrowserRouter>
           <Switch>
             <Route exact path="/" component={AddButton} />
             <Route path="/scan" component={BarcodeReaderWrapped} />
             <Route path="/lookup/:isbn" component={withRouter(Lookup)} />
           </Switch>
-        </BrowserRouter>
-      </div>
+        </div>
+      </BrowserRouter>
     )
   }
 }
