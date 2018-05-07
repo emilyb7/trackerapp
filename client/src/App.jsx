@@ -21,13 +21,15 @@ class App extends Component {
       <BrowserRouter>
         <div className="code h-100 relative">
           <Nav />
-          <Books />
+          <div className="relative">
+            <Books />
 
-          <Switch>
-            <Route exact path="/" component={AddButton} />
-            <Route path="/scan" component={BarcodeReaderWrapped} />
-            <Route path="/lookup/:isbn" component={withRouter(Lookup)} />
-          </Switch>
+            <Switch>
+              <Route exact path="/" component={AddButton} />
+              <Route path="/scan" component={BarcodeReaderWrapped} />
+              <Route path="/lookup/:isbn" component={withRouter(Lookup)} />
+            </Switch>
+          </div>
         </div>
       </BrowserRouter>
     )

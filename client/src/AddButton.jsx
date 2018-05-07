@@ -2,11 +2,9 @@ import React from 'react'
 import { Link, } from 'react-router-dom'
 
 const AddButton = () => (
-  <div className="fixed bottom-0 vh-10 pa3 bg-light-green w-100 tc">
-    <Link to="/scan">
-      <button className="pointer gray">Scan new book</button>
-    </Link>
-  </div>
+  <Link className="fixed" to="/scan" style={{ bottom: '6px', right: '6px', }}>
+    <div className="br-100 w3 h3 pointer bg-gray" />
+  </Link>
 )
 
 export default AddButton
