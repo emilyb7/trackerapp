@@ -6,7 +6,7 @@ defmodule Tracker.Library do
   def fetch(isbn) do
     library_url(isbn)
     |> HTTPoison.get(@headers, @user_agent)
-    |> handle_response
+    |> handle_response(isbn)
   end
 
 
@@ -18,12 +18,11 @@ defmodule Tracker.Library do
     {:nothing, "nowt here"}
   end
 
-  def handle_response({:ok, %{status_code: 200, body: body}}) do
+  def handle_response({:ok, %{status_code: 200, body: body}}, isbn) do
     body = Poison.decode!(body) |> Map.values |> Enum.at(0)
     title = Map.fetch!(body, "title")
     author = Map.fetch!(body, "authors") |> Enum.at(0) |> Map.fetch!("name")
     cover = get_cover(body)
-    isbn = Map.fetch!(body, "identifiers") |> Map.fetch!("isbn_13") |> Enum.at(0)
 
     response = %{
       :title => title,
