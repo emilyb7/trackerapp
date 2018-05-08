@@ -2,7 +2,7 @@ import React from 'react'
 import classnames from 'classnames'
 import { Route, Switch, } from 'react-router-dom'
 
-import BarcodeReader from '../BarcodeReader'
+import Scan from '../Scan'
 
 const LookupPage = ({ selected = 'scan', }) => {
   const defaultNavItemStyle = 'bl bw2 b--gray f4 flex-auto gray pa2 pointer ttu'
@@ -26,9 +26,11 @@ const LookupPage = ({ selected = 'scan', }) => {
           </li>
         </ul>
       </nav>
-      <Switch className="container">
-        <Route path="/add/scan" component={BarcodeReader} />
-      </Switch>
+      <div className="pt6">
+        <Switch>
+          <Route path="/add/scan" component={Scan} />
+        </Switch>
+      </div>
     </div>
   )
 }

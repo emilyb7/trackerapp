@@ -3,11 +3,12 @@ import { withRouter, } from 'react-router-dom'
 
 const titleMap = {
   defaultTitle: 'my library',
+  add: 'add new book',
   scan: 'scan',
 }
 
 const getTitle = ({ pathname, }) =>
-  titleMap[pathname.slice(1)] || titleMap.defaultTitle
+  titleMap[pathname.split('/')[1]] || titleMap.defaultTitle
 
 const Nav = ({ location, }) => {
   return (

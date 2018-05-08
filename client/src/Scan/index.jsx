@@ -1,21 +1,62 @@
 import React from 'react'
 import { Link, } from 'react-router-dom'
 
-const Scan = ({ initialised, }) => (
-  <div className="vh-90 overflow-hidden">
-    <span id="target" />
-    {initialised ? (
-      <div>
-        <Link to="/">
-          <span className="absolute top-0 right-0">Cancel</span>
-        </Link>
-      </div>
-    ) : (
-      <div>
-        <span>...initialising</span>
-      </div>
-    )}
-  </div>
-)
+import BarcodeReader from '../BarcodeReader'
+
+class Scan extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      started: false,
+    }
+  }
+
+  start = () => {
+    window.setTimeout(() => {
+      this.setState({ ...this.state, started: true, })
+    }, 500)
+  }
+
+  initialise = () => {
+    this.setState({ ...this.state, initialised: true, })
+  }
+
+  render = () => (
+    <div className="flex flex-column items-center">
+      {!this.state.started && (
+        <div className="lh-copy tc w-75">
+          <i className="fas fa-camera-retro f-headline mb5  gray" />
+          <p className="mb3">
+            With your permission, we'd like to use your device's camera
+          </p>
+          <a
+            onClick={this.start}
+            className="ba b--gray bw1 br-pill gray no-underline ma2 pa2"
+          >
+            Let's go
+          </a>
+        </div>
+      )}
+      {this.state.started &&
+        !this.state.initialised && (
+          <div className="lh-copy tc w-75">
+            <i className="fas fa-camera-retro f-headline mb5  gray" />
+            <p>When the camera starts up, use it to scan your book's barcode</p>
+          </div>
+        )}
+
+      {this.state.started && (
+        <span
+          id="target"
+          className={this.state.initialised ? 'o-100' : 'o-025'}
+        />
+      )}
+      <BarcodeReader
+        started={this.state.started}
+        initialise={this.initialise}
+      />
+    </div>
+  )
+}
 
 export default Scan

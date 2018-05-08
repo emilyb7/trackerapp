@@ -20,6 +20,10 @@ ul {
   padding: 0;
 }
 
+video {
+  width: 100%;
+}
+
 .vh-10 {
   height: 10vh;
 }
@@ -30,4 +34,8 @@ ul {
 
 .vh-90 {
   height: 90vh;
+}
+
+#target {
+  transition: opacity 1s;
 }

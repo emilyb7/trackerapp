@@ -8,15 +8,19 @@ import Scan from './Scan'
 class BarcodeReader extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { initialised: false, match: null, }
+    this.state = { match: null, }
   }
 
-  componentDidMount = () => {
-    this.init()
+  componentDidUpdate = prevProps => {
+    if (this.props.started && !prevProps.started) {
+      window.setTimeout(() => {
+        this.init()
+      }, 2000)
+    }
   }
 
   onInitSuccess = () => {
-    this.setState({ ...this.state, initialised: true, })
+    this.props.initialise()
     Quagga.start()
   }
 
@@ -61,8 +65,9 @@ class BarcodeReader extends React.Component {
   }
 
   render = () => {
+    if (!this.props.started) return null
     if (this.state.match) return <Redirect to={`/lookup/${this.state.match}`} />
-    return <Scan initialised={this.state.initialised} />
+    return null
   }
 }
 

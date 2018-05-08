@@ -22,7 +22,6 @@ class App extends Component {
             <Route exact path="/" component={Books} />
             <Route path="/lookup/:isbn" component={withRouter(Lookup)} />
             <Route path="/add" component={LookupPage} />
-            <Route path="/add" component={LookupPage} />
           </Switch>
         </div>
       </BrowserRouter>

@@ -4,7 +4,7 @@ import { Link, } from 'react-router-dom'
 const AddButton = () => (
   <Link
     className="fixed"
-    to="/lookup/scan"
+    to="/add/scan"
     style={{ bottom: '6px', right: '6px', }}
     title="Add new book"
   >
