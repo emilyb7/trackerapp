@@ -1,10 +1,8 @@
 import React, { Component, } from 'react'
 import { BrowserRouter, Route, Switch, withRouter, } from 'react-router-dom'
-import BarcodeReader from './BarcodeReader'
 import Books from './Books'
 import Lookup from './Lookup/index.jsx'
 import LookupPage from './LookupPage'
-import AddButton from './AddButton'
 import Nav from './Nav'
 
 class App extends Component {

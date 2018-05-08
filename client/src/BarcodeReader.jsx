@@ -1,9 +1,8 @@
 import React from 'react'
 import Quagga from 'quagga'
-import { Link, Redirect, } from 'react-router-dom'
+import { Redirect, } from 'react-router-dom'
 
 import isbnValidator from './isbn-validator'
-import Scan from './Scan'
 
 class BarcodeReader extends React.Component {
   constructor(props) {
@@ -16,6 +15,10 @@ class BarcodeReader extends React.Component {
       window.setTimeout(() => {
         this.init()
       }, 2000)
+    }
+
+    if (!this.props.started && prevProps.started) {
+      this.stop()
     }
   }
 

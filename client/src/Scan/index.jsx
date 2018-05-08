@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, } from 'react-router-dom'
+import classnames from 'classnames'
 
 import BarcodeReader from '../BarcodeReader'
 
@@ -15,6 +15,10 @@ class Scan extends React.Component {
     window.setTimeout(() => {
       this.setState({ ...this.state, started: true, })
     }, 500)
+  }
+
+  cancel = () => {
+    this.setState({ started: false, initialised: false, })
   }
 
   initialise = () => {
@@ -46,10 +50,21 @@ class Scan extends React.Component {
         )}
 
       {this.state.started && (
-        <span
-          id="target"
-          className={this.state.initialised ? 'o-100' : 'o-025'}
-        />
+        <div className="tc">
+          <span
+            id="target"
+            className={this.state.initialised ? 'o-100' : 'o-025'}
+          />
+          <a
+            onClick={this.cancel}
+            className={classnames(
+              { dn: !this.state.initialised, },
+              'ba b--gray bw1 br-pill gray no-underline ma2 pa2'
+            )}
+          >
+            Cancel
+          </a>
+        </div>
       )}
       <BarcodeReader
         started={this.state.started}
