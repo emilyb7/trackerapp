@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, withRouter, } from 'react-router-dom'
 import BarcodeReader from './BarcodeReader'
 import Books from './Books'
 import Lookup from './Lookup/index.jsx'
+import LookupPage from './LookupPage'
 import AddButton from './AddButton'
 import Nav from './Nav'
 
@@ -13,18 +14,15 @@ class App extends Component {
   }
 
   render() {
-    const BarcodeReaderWrapped = () => (
-      <BarcodeReader updateQuery={this.updateQuery} />
-    )
-
     return (
       <BrowserRouter>
         <div className="code">
           <Nav />
           <Switch>
             <Route exact path="/" component={Books} />
-            <Route path="/scan" component={BarcodeReaderWrapped} />
             <Route path="/lookup/:isbn" component={withRouter(Lookup)} />
+            <Route path="/add" component={LookupPage} />
+            <Route path="/add" component={LookupPage} />
           </Switch>
         </div>
       </BrowserRouter>
