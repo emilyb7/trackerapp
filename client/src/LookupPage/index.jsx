@@ -26,7 +26,7 @@ const LookupPage = ({ selected = 'scan', }) => {
           </li>
         </ul>
       </nav>
-      <div className="pt6">
+      <div className="h-fill pt6">
         <Switch>
           <Route path="/add/scan" component={Scan} />
         </Switch>

@@ -1,5 +1,7 @@
 import React, { Component, } from 'react'
 import { BrowserRouter, Route, Switch, withRouter, } from 'react-router-dom'
+import { TransitionGroup, CSSTransition, } from 'react-transition-group'
+
 import Books from './Books'
 import Lookup from './Lookup/index.jsx'
 import LookupPage from './LookupPage'
@@ -14,14 +16,29 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className="code">
-          <Nav />
-          <Switch>
-            <Route exact path="/" component={Books} />
-            <Route path="/lookup/:isbn" component={withRouter(Lookup)} />
-            <Route path="/add" component={LookupPage} />
-          </Switch>
-        </div>
+        <Route
+          render={({ location, }) => (
+            <div className="code">
+              <Nav />
+              <TransitionGroup>
+                <CSSTransition
+                  key={location.key}
+                  classNames="fade"
+                  timeout={500}
+                >
+                  <Switch location={location}>
+                    <Route exact path="/" component={Books} />
+                    <Route
+                      path="/lookup/:isbn"
+                      component={withRouter(Lookup)}
+                    />
+                    <Route path="/add" component={LookupPage} />
+                  </Switch>
+                </CSSTransition>
+              </TransitionGroup>
+            </div>
+          )}
+        />
       </BrowserRouter>
     )
   }
