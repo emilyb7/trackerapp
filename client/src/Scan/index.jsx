@@ -44,7 +44,7 @@ class Scan extends React.Component {
       {this.state.started &&
         !this.state.initialised && (
           <div className="lh-copy tc w-75">
-            <i className="fas fa-camera-retro f-headline mb5  gray" />
+            <i className="ani-rotate fas fa-camera-retro f-headline mb5  gray" />
             <p>When the camera starts up, use it to scan your book's barcode</p>
           </div>
         )}
