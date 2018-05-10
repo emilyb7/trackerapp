@@ -6,6 +6,7 @@ import validateIsbn from '../isbn-validator'
 
 import Panel from './Panel'
 import Result from './Result'
+import Loading from './Loading'
 
 class Lookup extends React.Component {
   constructor(props) {
@@ -33,26 +34,30 @@ class Lookup extends React.Component {
           : this.setState({ ...this.state, error: err, })
       })
       .finally(() => {
-        this.setState({ ...this.state, fetching: false, })
+        window.setTimeout(() => {
+          this.setState({ ...this.state, fetching: false, })
+        }, 80000)
       })
   }
 
   onSuccess = data => {
-    this.setState({ ...this.state, data, })
+    window.setTimeout(() => {
+      this.setState({ ...this.state, data, })
+    }, 80000)
   }
 
   render = () => {
     if (this.state.invalid) return <Redirect to="/" />
 
     const component = this.state.fetching ? (
-      <p>fetching data</p>
+      <Loading isbn={this.props.match.params.isbn} />
     ) : this.state.notFound ? (
       <p>Not found</p>
     ) : (
       <Result data={this.state.data} />
     )
 
-    return <Panel>{component}</Panel>
+    return component
   }
 }
 

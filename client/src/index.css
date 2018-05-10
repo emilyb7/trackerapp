@@ -36,6 +36,14 @@ video {
   animation-timing-function: ease;
 }
 
+.ani-perspective {
+  animation-name: perspective;
+  animation-direction: alternate;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
 .fade-enter {
   opacity: 0;
   z-index: 1;
@@ -81,5 +89,15 @@ video {
 
   100% {
     transform: rotate(0deg);
+  }
+}
+
+@keyframes perspective {
+  0% {
+    transform: perspective(700px) translate3d(10px, 0, 100px);
+  }
+
+  100% {
+    transform: rotate(800px) translate3d(10px, 0, 100px);
   }
 }
