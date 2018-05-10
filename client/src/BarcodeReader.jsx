@@ -10,6 +10,10 @@ class BarcodeReader extends React.Component {
     this.state = { match: null, }
   }
 
+  componentDidMount = () => {
+    if (this.props.started) return this.init()
+  }
+
   componentDidUpdate = prevProps => {
     if (this.props.started && !prevProps.started) {
       window.setTimeout(() => {
@@ -69,7 +73,7 @@ class BarcodeReader extends React.Component {
 
   render = () => {
     if (!this.props.started) return null
-    if (this.state.match) return <Redirect to={`/lookup/${this.state.match}`} />
+    if (this.state.match) return <Redirect to={`/result/${this.state.match}`} />
     return null
   }
 }

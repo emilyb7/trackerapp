@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch, withRouter, } from 'react-router-dom'
 import { TransitionGroup, CSSTransition, } from 'react-transition-group'
 
 import Books from './Books'
-import Lookup from './Lookup/index.jsx'
+import Result from './Result'
 import LookupPage from './LookupPage'
 import Nav from './Nav'
 
@@ -29,8 +29,8 @@ class App extends Component {
                   <Switch location={location}>
                     <Route exact path="/" component={Books} />
                     <Route
-                      path="/lookup/:isbn"
-                      component={withRouter(Lookup)}
+                      path="/result/:isbn"
+                      component={withRouter(Result)}
                     />
                     <Route path="/add" component={LookupPage} />
                   </Switch>

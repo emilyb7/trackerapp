@@ -6,9 +6,7 @@ import BarcodeReader from '../BarcodeReader'
 class Scan extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      started: false,
-    }
+    this.state = { started: false, ...this.props.location.state, }
   }
 
   start = () => {
