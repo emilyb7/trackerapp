@@ -60,7 +60,7 @@ class BarcodeReader extends React.Component {
   }
 
   stop = () => {
-    Quagga.stop()
+    if (this.props.started) Quagga.stop()
   }
 
   componentWillUnmount = () => {
