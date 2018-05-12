@@ -11,7 +11,6 @@ class Loading extends React.Component {
         height: 50,
       }) // Will affect all barcodes
       .EAN13(this.props.isbn, { fontSize: 18, textMargin: 0, })
-      .blank(20) // Create space between the barcodes
       .render()
   }
 

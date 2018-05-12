@@ -70,6 +70,10 @@ video {
   height: 90vh;
 }
 
+.w-content {
+  width: fit-content;
+}
+
 #target {
   transition: opacity 1s;
 }

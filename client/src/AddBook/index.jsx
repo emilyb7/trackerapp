@@ -25,9 +25,12 @@ class AddBook extends React.Component {
     if (this.state.success) return <Redirect to="/" />
     if (this.state.fetching) return <span>fetching data...</span>
     return (
-      <button className="gray pointer" onClick={this.onClick}>
+      <a
+        onClick={this.onClick}
+        className="ba bg-silver bw1 br-pill white no-underline ma2 pa3 ph4"
+      >
         Add to library
-      </button>
+      </a>
     )
   }
 }
