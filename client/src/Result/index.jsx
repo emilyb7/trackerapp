@@ -36,14 +36,14 @@ class Lookup extends React.Component {
       .finally(() => {
         window.setTimeout(() => {
           this.setState({ ...this.state, fetching: false, })
-        }, 2000)
+        }, 500)
       })
   }
 
   onSuccess = data => {
     window.setTimeout(() => {
       this.setState({ ...this.state, data, })
-    }, 2000)
+    }, 500)
   }
 
   render = () => {

@@ -25,12 +25,11 @@ class AddBook extends React.Component {
     if (this.state.success) return <Redirect to="/" />
     if (this.state.fetching) return <span>fetching data...</span>
     return (
-      <a
-        onClick={this.onClick}
-        className="ba bg-silver bw1 br-pill white no-underline ma2 pa3 ph4"
-      >
-        Add to library
-      </a>
+      <div className="ba bg-silver br-pill ma2 pa3 ph4 tc">
+        <a onClick={this.onClick} className="br-pill white no-underline ">
+          Add to library
+        </a>
+      </div>
     )
   }
 }
