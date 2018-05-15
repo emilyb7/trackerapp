@@ -31,4 +31,13 @@ defmodule Tracker.Session do
         :error
     end
   end
+
+  def finish(session_id) do
+    updated = Tracker.Repo.update_all(from(s in "sessions", where: [id: ^(session_id)]),
+        set: [finished_at: NaiveDateTime.utc_now])
+    case updated do
+      {1, nil} -> :ok
+      _ -> :error
+    end
+  end
 end
