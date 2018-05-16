@@ -37,6 +37,7 @@ defmodule Tracker.Session do
         set: [finished_at: NaiveDateTime.utc_now])
     case updated do
       {1, nil} -> :ok
+      {0, nil} -> :not_found
       _ -> :error
     end
   end

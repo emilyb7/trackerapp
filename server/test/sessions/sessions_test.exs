@@ -15,6 +15,10 @@ defmodule Tracker.SessionsTest do
     } |> Book.create()
   end
 
+  def get_test_book_id do
+    Repo.one(from b in Book) |> Map.fetch!(:id)
+  end
+
   test "creating a session in DB" do
     previousCount =
       Session
@@ -23,9 +27,18 @@ defmodule Tracker.SessionsTest do
 
     test_book_id = Repo.one(from b in Book) |> Map.fetch!(:id)
 
-    assert Session.create(%{ book_id: test_book_id, started_at: NaiveDateTime.utc_now }) == :ok
+    assert Session.create(%{ book_id: get_test_book_id(), started_at: NaiveDateTime.utc_now }) == :ok
     assert(Session |> Repo.all() |> Enum.count === previousCount + 1)
-    assert(Repo.all(from s in Session, where: [book_id: ^(test_book_id)]) |> Enum.count) === 1
+    assert(Repo.all(from s in Session, where: [book_id: ^(test_book_id)]) |> Enum.count == 1)
+  end
 
+  test "finishing a session" do
+    Session.create(%{ book_id: get_test_book_id(), started_at: NaiveDateTime.utc_now })
+    session_id = Repo.one(from Session) |> Map.fetch!(:id)
+    assert Session.finish(session_id) == :ok
+  end
+
+  test "finishing a session - session does not exist" do
+    assert Session.finish(999999) == :not_found
   end
 end
