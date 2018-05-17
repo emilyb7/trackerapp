@@ -39,6 +39,20 @@ defmodule Router do
         _ -> send_resp conn, 400, "invalid params"
     end
   end
+
+  get "/books/:book_id/start" do
+    # get book first
+    case Tracker.Book.check_book_exists(book_id) do
+      # then start session
+      :ok ->
+        case Tracker.Session.create(%{book_id: book_id, started_at: NaiveDateTime.utc_now}) do
+          :ok -> conn |> send_resp(200, "ok")
+          _ -> conn |> send_resp(500, "error")
+        end
+      _ -> conn |> send_resp(404, "not found")
+    end
+  end
+
   match _ do
     send_resp conn, 404, "oops"
   end

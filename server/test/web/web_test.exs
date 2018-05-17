@@ -1,4 +1,5 @@
 defmodule Router.Test do
+  import Ecto.Query
   use ExUnit.Case
   use Plug.Test
 
@@ -65,6 +66,30 @@ defmodule Router.Test do
 
     data = conn.resp_body |> Poison.decode!
     assert Map.fetch!(data, "isbn") === isbn
+  end
 
+  test "/books:book_id/start returns 200" do
+    %{
+      title: "Charlottes Web",
+      isbn: "9780064400558",
+      author: "E.B. White",
+      cover: "https://covers.openlibrary.org/w/id/8156475-M.jpg",
+    } |> Book.create
+    test_book_id = Repo.one(from Book) |> Map.fetch!(:id)
+
+    conn =
+      conn(:get, ~s(/books/#{test_book_id}/start), "")
+      |> Router.call(@opts)
+    assert conn.state === :sent
+    assert conn.status === 200
+  end
+
+  test "/books:book_id/start returns 404 when book does not exist" do
+
+    conn =
+      conn(:get, ~s(/books/#{999999}/start), "")
+      |> Router.call(@opts)
+    assert conn.state === :sent
+    assert conn.status === 404
   end
 end
