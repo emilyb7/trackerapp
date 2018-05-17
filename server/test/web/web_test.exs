@@ -4,18 +4,23 @@ defmodule Router.Test do
   use Plug.Test
 
   alias Router
-  alias Tracker.{Book, Repo}
+  alias Tracker.{Book, Repo, Session}
 
   @opts Router.init([])
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
+  end
+  def get_test_book() do
     %{
       title: "Charlottes Web",
       isbn: "9780064400558",
       author: "E.B. White",
       cover: "https://covers.openlibrary.org/w/id/8156475-M.jpg",
     } |> Book.create()
+
+    Repo.one(from b in Book) |> Map.fetch!(:id)
   end
+
   test "returns welcome" do
     conn =
       conn(:get, "/", "")
@@ -75,13 +80,7 @@ defmodule Router.Test do
   end
 
   test "/books:book_id/start returns 200" do
-    %{
-      title: "Charlottes Web",
-      isbn: "9780064400558",
-      author: "E.B. White",
-      cover: "https://covers.openlibrary.org/w/id/8156475-M.jpg",
-    } |> Book.create
-    test_book_id = Repo.one(from Book) |> Map.fetch!(:id)
+    test_book_id = get_test_book()
 
     conn =
       conn(:get, ~s(/books/#{test_book_id}/start), "")
@@ -99,7 +98,8 @@ defmodule Router.Test do
   end
 
   test "/sessions/:session_id/finish returns 200" do
-    conn = conn(:get, ~s(/sessions/#{2}/finish), "")
+    session_id = Tracker.Session.finish(get_test_book())
+    conn = conn(:get, ~s(/sessions/#{session_id}/finish), "")
     |> Router.call(@opts)
 
     assert conn.state === :sent
