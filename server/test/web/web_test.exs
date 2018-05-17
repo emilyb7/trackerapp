@@ -9,6 +9,12 @@ defmodule Router.Test do
   @opts Router.init([])
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
+    %{
+      title: "Charlottes Web",
+      isbn: "9780064400558",
+      author: "E.B. White",
+      cover: "https://covers.openlibrary.org/w/id/8156475-M.jpg",
+    } |> Book.create()
   end
   test "returns welcome" do
     conn =
@@ -84,12 +90,19 @@ defmodule Router.Test do
     assert conn.status === 200
   end
 
-  test "/books:book_id/start returns 404 when book does not exist" do
-
+  test "/books/:book_id/start returns 404 when book does not exist" do
     conn =
       conn(:get, ~s(/books/#{999999}/start), "")
       |> Router.call(@opts)
     assert conn.state === :sent
     assert conn.status === 404
+  end
+
+  test "/sessions/:session_id/finish returns 200" do
+    conn = conn(:get, ~s(/sessions/#{2}/finish), "")
+    |> Router.call(@opts)
+
+    assert conn.state === :sent
+    assert conn.status === 200
   end
 end
