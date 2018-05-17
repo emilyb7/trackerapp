@@ -41,4 +41,8 @@ defmodule Tracker.Session do
       _ -> :error
     end
   end
+
+  def get_by_book_id(book_id) do
+    Repo.all(from Session, where: [book_id: ^(book_id)])
+  end
 end

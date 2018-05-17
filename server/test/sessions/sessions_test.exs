@@ -41,4 +41,14 @@ defmodule Tracker.SessionsTest do
   test "finishing a session - session does not exist" do
     assert Session.finish(999999) == :not_found
   end
+
+  test "get sessions by book id - book does not exist" do
+    assert Session.get_by_book_id(999999) == []
+  end
+
+  test "get sessions by book id - success" do
+    test_book_id = get_test_book_id()
+    Session.create(%{ book_id: get_test_book_id(), started_at: NaiveDateTime.utc_now })
+    assert Session.get_by_book_id(test_book_id) |> Enum.count === 1
+  end
 end
