@@ -45,11 +45,19 @@ defmodule Router do
     case Tracker.Book.check_book_exists(book_id) do
       # then start session
       :ok ->
-        case Tracker.Session.start(book_id) do
-          book_id -> conn |> send_resp(200, "ok")
+        case is_integer Tracker.Session.start(book_id) do
+          true -> conn |> send_resp(200, "ok")
           _ -> conn |> send_resp(500, "error")
         end
       _ -> conn |> send_resp(404, "not found")
+    end
+  end
+
+  get "/sessions/:session_id/finish" do
+    case Tracker.Session.finish(String.to_integer session_id) do
+      :ok -> conn |> send_resp(200, "ok")
+      :not_found -> conn |> send_resp(404, "not found")
+      _ -> conn |> send_resp(500, "error")
     end
   end
 

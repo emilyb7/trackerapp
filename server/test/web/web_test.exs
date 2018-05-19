@@ -98,7 +98,7 @@ defmodule Router.Test do
   end
 
   test "/sessions/:session_id/finish returns 200" do
-    session_id = Tracker.Session.finish(get_test_book())
+    session_id = Session.start(get_test_book())
     conn = conn(:get, ~s(/sessions/#{session_id}/finish), "")
     |> Router.call(@opts)
 
