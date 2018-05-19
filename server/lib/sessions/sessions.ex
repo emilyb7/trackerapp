@@ -24,16 +24,21 @@ defmodule Tracker.Session do
   def create(session_params) do
     changeset = changeset(%Session{}, session_params)
     case Tracker.Repo.insert(changeset) do
-      {:ok, _record} ->
-        :ok
+      {:ok, record} ->
+        Map.fetch!(record, :id)
 
       {:error, _changeset} ->
         :error
     end
   end
 
+  def start(book_id) do
+    create(%{book_id: book_id, started_at: NaiveDateTime.utc_now()})
+  end
+
   def finish(session_id) do
-    updated = Tracker.Repo.update_all(from(s in "sessions", where: [id: ^(session_id)]),
+    updated = Tracker.Repo.update_all(from(s in "sessions",
+        where: [id: ^(session_id)]),
         set: [finished_at: NaiveDateTime.utc_now])
     case updated do
       {1, nil} -> :ok

@@ -19,7 +19,7 @@ defmodule Tracker.SessionsTest do
     Repo.one(from b in Book) |> Map.fetch!(:id)
   end
 
-  test "creating a session in DB" do
+  test "creating a session" do
     previousCount =
       Session
       |> Repo.all()
@@ -27,9 +27,13 @@ defmodule Tracker.SessionsTest do
 
     test_book_id = Repo.one(from b in Book) |> Map.fetch!(:id)
 
-    assert Session.create(%{ book_id: get_test_book_id(), started_at: NaiveDateTime.utc_now }) == :ok
+    assert is_integer(Session.create(%{ book_id: get_test_book_id(), started_at: NaiveDateTime.utc_now }))
     assert(Session |> Repo.all() |> Enum.count === previousCount + 1)
     assert(Repo.all(from s in Session, where: [book_id: ^(test_book_id)]) |> Enum.count == 1)
+  end
+
+  test "starting a session" do
+    assert is_integer Session.start(get_test_book_id())
   end
 
   test "finishing a session" do

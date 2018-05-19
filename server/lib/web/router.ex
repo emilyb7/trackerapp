@@ -45,8 +45,8 @@ defmodule Router do
     case Tracker.Book.check_book_exists(book_id) do
       # then start session
       :ok ->
-        case Tracker.Session.create(%{book_id: book_id, started_at: NaiveDateTime.utc_now}) do
-          :ok -> conn |> send_resp(200, "ok")
+        case Tracker.Session.start(book_id) do
+          book_id -> conn |> send_resp(200, "ok")
           _ -> conn |> send_resp(500, "error")
         end
       _ -> conn |> send_resp(404, "not found")
