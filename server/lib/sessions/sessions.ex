@@ -14,7 +14,7 @@ defmodule Tracker.Session do
     field :progress, :integer
     timestamps()
   end
-  @required_fields ~w(book_id started_at)
+  @required_fields ~w(book_id started_at finished_at progress)
   @optional_fields ~w()
   def changeset(session, params \\ :empty) do
     session
@@ -47,7 +47,15 @@ defmodule Tracker.Session do
     end
   end
 
-  def get_by_book_id(book_id) do
-    Repo.all(from Session, where: [book_id: ^(book_id)])
+  def get_by_book_id(book_id, params \\ :empty) do
+    q = case params do
+      :empty ->
+        (from Session, [where: [book_id: ^(book_id)]])
+      %{:finished => true} ->
+        (from(s in Session, [where: s.book_id == ^(book_id) and not is_nil(s.finished_at)]))
+      %{:finished => false} ->
+        (from(s in Session, [where: s.book_id == ^(book_id) and is_nil(s.finished_at)]))
+    end
+    Repo.all(q)
   end
 end

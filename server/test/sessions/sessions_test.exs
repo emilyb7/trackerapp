@@ -55,4 +55,25 @@ defmodule Tracker.SessionsTest do
     Session.create(%{ book_id: get_test_book_id(), started_at: NaiveDateTime.utc_now })
     assert Session.get_by_book_id(test_book_id) |> Enum.count === 1
   end
+
+  test "get sessions by book id - finished sessions only" do
+    test_book_id = get_test_book_id()
+    Session.create(%{ book_id: test_book_id, started_at: NaiveDateTime.utc_now, finished_at: NaiveDateTime.utc_now })
+    Session.create(%{ book_id: test_book_id, started_at: NaiveDateTime.utc_now, finished_at: NaiveDateTime.utc_now })
+    Session.create(%{ book_id: test_book_id, started_at: NaiveDateTime.utc_now })
+
+    options = %{finished: true}
+    assert Session.get_by_book_id(test_book_id, options) |> Enum.count === 2
+  end
+
+  test "get sessions by book id - unfinished sessions only" do
+    test_book_id = get_test_book_id()
+    Session.create(%{ book_id: test_book_id, started_at: NaiveDateTime.utc_now, finished_at: NaiveDateTime.utc_now })
+    Session.create(%{ book_id: test_book_id, started_at: NaiveDateTime.utc_now, finished_at: NaiveDateTime.utc_now })
+    Session.create(%{ book_id: test_book_id, started_at: NaiveDateTime.utc_now })
+
+    options = %{finished: false}
+    assert Session.get_by_book_id(test_book_id, options) |> Enum.count === 1
+  end
+
 end
