@@ -5,7 +5,7 @@
 - Saving books to DB ✅
 - API ✅
 - Basic client-side app ✅
-- UI improvements
+- UI improvements (ongoing)
 - Add book by isbn (manual entry)
 - Search for title
 - Book page
@@ -13,4 +13,11 @@
 - Pagination
 - Cacheing images in app
 - Cacheing API content in app
-- Sessions API
+- Sessions API ✅
+
+
+## Improvements
+
+- Error handling in API
+- Upgrade elixir version
+- Restructure routes?
