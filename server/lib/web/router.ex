@@ -40,20 +40,23 @@ defmodule Router do
     end
   end
 
-  get "/books/:book_id/start" do
-    # get book first
-    case Tracker.Book.check_book_exists(book_id) do
-      # then start session
-      :ok ->
-        case is_integer Tracker.Session.start(book_id) do
-          true -> conn |> send_resp(200, "ok")
-          _ -> conn |> send_resp(500, "error")
-        end
-      _ -> conn |> send_resp(404, "not found")
+  post "/books/:book_id/start" do
+    Tracker.Book.check_book_exists(book_id)
+    cond do
+      # get book first
+      Tracker.Book.check_book_exists(book_id) !== :ok ->
+        conn |> send_resp(404, "not found")
+      # check for existing session
+      Tracker.Session.get_by_book_id(book_id, %{ finished: false }) |> Enum.count > 0 ->
+        conn |> send_resp(400, "session already exists")
+      # create session
+      Tracker.Session.start(book_id) |> is_integer ->
+        conn |> send_resp(200, "ok")
+      true -> conn |> send_resp(500, "error")
     end
   end
 
-  get "/sessions/:session_id/finish" do
+  post "/sessions/:session_id/finish" do
     case Tracker.Session.finish(String.to_integer session_id) do
       :ok -> conn |> send_resp(200, "ok")
       :not_found -> conn |> send_resp(404, "not found")

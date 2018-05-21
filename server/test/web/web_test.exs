@@ -59,6 +59,7 @@ defmodule Router.Test do
     assert res.author === Poison.decode!(test_book)
              |> Map.get("author")
   end
+
   test "/books/create throws 400 with invalid payload" do
     conn =
       conn(:post, "/books/create", "")
@@ -67,6 +68,7 @@ defmodule Router.Test do
     assert conn.state === :sent
     assert conn.status === 400
   end
+
   test "/lookup returns valid data from API" do
     isbn = "9780345505101"
     conn =
@@ -83,7 +85,7 @@ defmodule Router.Test do
     test_book_id = get_test_book()
 
     conn =
-      conn(:get, ~s(/books/#{test_book_id}/start), "")
+      conn(:post, ~s(/books/#{test_book_id}/start), "")
       |> Router.call(@opts)
     assert conn.state === :sent
     assert conn.status === 200
@@ -91,15 +93,26 @@ defmodule Router.Test do
 
   test "/books/:book_id/start returns 404 when book does not exist" do
     conn =
-      conn(:get, ~s(/books/#{999999}/start), "")
+      conn(:post, ~s(/books/#{999999}/start), "")
       |> Router.call(@opts)
     assert conn.state === :sent
     assert conn.status === 404
   end
 
+  test "/books/:book_id/start returns 400 when session already exists" do
+    test_book_id = get_test_book()
+    Session.start(test_book_id)
+
+    conn = conn(:post, ~s(/books/#{test_book_id}/start), "")
+    |> Router.call(@opts)
+
+    assert conn.state === :sent
+    assert conn.status === 400
+  end
+
   test "/sessions/:session_id/finish returns 200" do
     session_id = Session.start(get_test_book())
-    conn = conn(:get, ~s(/sessions/#{session_id}/finish), "")
+    conn = conn(:post, ~s(/sessions/#{session_id}/finish), "")
     |> Router.call(@opts)
 
     assert conn.state === :sent
