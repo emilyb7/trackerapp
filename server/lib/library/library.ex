@@ -9,20 +9,15 @@ defmodule Tracker.Library do
     |> handle_response
   end
 
-
-  def library_url(isbn) do
+  defp library_url(isbn) do
     "http://openlibrary.org/api/books\?bibkeys\=ISBN:#{isbn}\&format\=json\&jscmd\=data"
   end
 
-  def fetch_request_body_data(body) do
-    Poison.decode!(body) |> Map.values |> Enum.at(0)
-  end
-
-  def handle_response({:ok, %{status_code: 200, body: "{}"}}) do
+  defp handle_response({:ok, %{status_code: 200, body: "{}"}}) do
     {:nothing, "nowt here"}
   end
 
-  def handle_response({:ok, %{status_code: 200, body: body}}) do
+  defp handle_response({:ok, %{status_code: 200, body: body}}) do
     body = fetch_request_body_data(body)
     title = Map.fetch!(body, "title")
     author = Map.fetch!(body, "authors") |> Enum.at(0) |> Map.fetch!("name")
@@ -39,11 +34,16 @@ defmodule Tracker.Library do
     {:ok, response}
   end
 
-  def handle_response({_, %{status_code: _, body: body}}) do
+  # error case
+  defp handle_response({_, %{status_code: _, body: body}}) do
     {:error, Poison.Parser.parse!(body)}
   end
 
-  def get_cover(book_data) do
+  defp fetch_request_body_data(body) do
+    Poison.decode!(body) |> Map.values |> Enum.at(0)
+  end
+
+  defp get_cover(book_data) do
     case Map.fetch(book_data, "cover") do
       {:ok, cover} ->
          Map.fetch!(cover, "medium")
