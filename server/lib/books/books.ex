@@ -32,19 +32,13 @@ defmodule Tracker.Book do
     case Repo.one(from(b in Book, where: [id: ^(book_id)])) do
       nil -> :not_found
       book -> :ok
-      _ -> :error
     end
   end
 
 
   def create(book_params) do
     changeset = changeset(%Book{}, book_params)
-    case Tracker.Repo.insert(changeset) do
-      {:ok, _record} ->
-        :ok
-
-      {:error, _changeset} ->
-        :error
-    end
+    Tracker.Repo.insert(changeset)
+    :ok
   end
 end

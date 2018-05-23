@@ -14,12 +14,16 @@ defmodule Tracker.Library do
     "http://openlibrary.org/api/books\?bibkeys\=ISBN:#{isbn}\&format\=json\&jscmd\=data"
   end
 
+  def fetch_request_body_data(body) do
+    Poison.decode!(body) |> Map.values |> Enum.at(0)
+  end
+
   def handle_response({:ok, %{status_code: 200, body: "{}"}}) do
     {:nothing, "nowt here"}
   end
 
   def handle_response({:ok, %{status_code: 200, body: body}}) do
-    body = Poison.decode!(body) |> Map.values |> Enum.at(0)
+    body = fetch_request_body_data(body)
     title = Map.fetch!(body, "title")
     author = Map.fetch!(body, "authors") |> Enum.at(0) |> Map.fetch!("name")
     cover = get_cover(body)
