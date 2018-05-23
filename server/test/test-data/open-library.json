@@ -1,0 +1,104 @@
+{
+  "ISBN:1416500286": {
+    "publishers": [{ "name": "Pocket Books" }],
+    "pagination": "xviii, 520 p. ;",
+    "identifiers": {
+      "isbn_13": ["9781416500285"],
+      "lccn": ["2005280626"],
+      "openlibrary": ["OL24552106M"],
+      "isbn_10": ["1416500286"],
+      "oclc": ["60576411"]
+    },
+    "table_of_contents": [
+      { "title": "Introduction", "label": "", "pagenum": "", "level": 0 },
+      {
+        "title": "Chronology of Jane Austen's life and work",
+        "label": "",
+        "pagenum": "",
+        "level": 0
+      },
+      {
+        "title": "Historical context of Emma",
+        "label": "",
+        "pagenum": "",
+        "level": 0
+      },
+      { "title": "Emma", "label": "", "pagenum": "", "level": 0 },
+      { "title": "Notes", "label": "", "pagenum": "", "level": 0 },
+      { "title": "Interpretive notes", "label": "", "pagenum": "", "level": 0 },
+      { "title": "Critical excerpts", "label": "", "pagenum": "", "level": 0 },
+      {
+        "title": "Questions for discussion",
+        "label": "",
+        "pagenum": "",
+        "level": 0
+      },
+      {
+        "title": "Suggestions for the interested reader.",
+        "label": "",
+        "pagenum": "",
+        "level": 0
+      }
+    ],
+    "title": "Emma",
+    "url": "http://openlibrary.org/books/OL24552106M/Emma",
+    "classifications": {
+      "dewey_decimal_class": ["823/.7"],
+      "lc_classifications": ["PR4034 .E5 2005b"]
+    },
+    "notes": "First published in 1816.\n\n\"Includes detailed explanatory notes, an overview of key themes, and more\"--Cover p. 1.\n\nIncludes bibliographical references.",
+    "number_of_pages": 520,
+    "subject_places": [
+      {
+        "url": "https://openlibrary.org/subjects/place:england",
+        "name": "England"
+      }
+    ],
+    "subjects": [
+      {
+        "url": "https://openlibrary.org/subjects/fathers_and_daughters",
+        "name": "Fathers and daughters"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/young_women",
+        "name": "Young women"
+      },
+      { "url": "https://openlibrary.org/subjects/fiction", "name": "Fiction" },
+      {
+        "url": "https://openlibrary.org/subjects/female_friendship",
+        "name": "Female friendship"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/accessible_book",
+        "name": "Accessible book"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/protected_daisy",
+        "name": "Protected DAISY"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/in_library",
+        "name": "In library"
+      }
+    ],
+    "publish_date": "2005",
+    "key": "/books/OL24552106M",
+    "authors": [
+      {
+        "url": "http://openlibrary.org/authors/OL21594A/Jane_Austen",
+        "name": "Jane Austen"
+      }
+    ],
+    "by_statement": "Jane Austen ; supplementary material written by Alyssa Harad",
+    "publish_places": [{ "name": "New York" }],
+    "ebooks": [
+      {
+        "checkedout": true,
+        "formats": {},
+        "preview_url": "https://archive.org/details/emmaaust00aust",
+        "borrow_url": "https://openlibrary.org/books/OL24552106M/Emma/borrow",
+        "availability": "borrow"
+      }
+    ]
+  }
+}
