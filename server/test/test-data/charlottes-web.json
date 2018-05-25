@@ -1,0 +1,180 @@
+{
+  "ISBN:9780062658753": {
+    "publishers": [{ "name": "Harper" }],
+    "identifiers": {
+      "amazon.co.uk_asin": ["0062658751"],
+      "google": ["kc09MQAACAAJ"],
+      "amazon.ca_asin": ["0062658751"],
+      "openlibrary": ["OL26430313M"],
+      "isbn_13": ["9780062658753"],
+      "isbn_10": ["0062658751"],
+      "oclc": ["968627956"],
+      "goodreads": ["33914038"]
+    },
+    "links": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Charlotte%27s_Web",
+        "title": "Charlotte's Web - Wikipedia"
+      },
+      {
+        "url": "https://www.theguardian.com/books/2002/nov/23/featuresreviews.guardianreview23",
+        "title": "Caught in the finest web - Review: Charlotte's Web by EB White | Books | The Guardian"
+      },
+      {
+        "url": "https://www.commonsensemedia.org/book-reviews/charlottes-web",
+        "title": "Charlotte's Web Book Review - Common Sense Media"
+      },
+      {
+        "url": "https://www.scholastic.com/charlottesweb/",
+        "title": "Official web site (Scholastic)"
+      }
+    ],
+    "title": "Charlotte's Web",
+    "url": "http://openlibrary.org/books/OL26430313M/Charlotte's_Web",
+    "notes": "US / CAN",
+    "number_of_pages": 208,
+    "cover": {
+      "small": "https://covers.openlibrary.org/b/id/8140481-S.jpg",
+      "large": "https://covers.openlibrary.org/b/id/8140481-L.jpg",
+      "medium": "https://covers.openlibrary.org/b/id/8140481-M.jpg"
+    },
+    "subject_places": [
+      {
+        "url": "https://openlibrary.org/subjects/place:zuckerman's_farm",
+        "name": "Zuckerman's Farm"
+      }
+    ],
+    "subjects": [
+      {
+        "url": "https://openlibrary.org/subjects/in_library",
+        "name": "In library"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/massachusetts_children's_book_award_winner",
+        "name": "Massachusetts Children's Book Award winner"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/newbery_honor_book",
+        "name": "Newbery Honor book"
+      },
+      { "url": "https://openlibrary.org/subjects/readers", "name": "Readers" },
+      {
+        "url": "https://openlibrary.org/subjects/juvenile_fiction",
+        "name": "Juvenile fiction"
+      },
+      { "url": "https://openlibrary.org/subjects/animals", "name": "Animals" },
+      { "url": "https://openlibrary.org/subjects/pets", "name": "Pets" },
+      {
+        "url": "https://openlibrary.org/subjects/open_library_staff_picks",
+        "name": "Open Library Staff Picks"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/latin_language_materials",
+        "name": "Latin language materials"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/domestic_animals",
+        "name": "Domestic animals"
+      },
+      { "url": "https://openlibrary.org/subjects/fiction", "name": "Fiction" },
+      {
+        "url": "https://openlibrary.org/subjects/accessible_book",
+        "name": "Accessible book"
+      },
+      { "url": "https://openlibrary.org/subjects/pigs", "name": "Pigs" },
+      { "url": "https://openlibrary.org/subjects/spiders", "name": "Spiders" },
+      {
+        "url": "https://openlibrary.org/subjects/folklore",
+        "name": "Folklore"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/protected_daisy",
+        "name": "Protected DAISY"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/large_type_books",
+        "name": "Large type books"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/farm_life",
+        "name": "Farm life"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/friendship",
+        "name": "Friendship"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/spanish_language_materials",
+        "name": "Spanish language materials"
+      },
+      { "url": "https://openlibrary.org/subjects/swine", "name": "Swine" },
+      {
+        "url": "https://openlibrary.org/subjects/american_farm_life",
+        "name": "American farm life"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/ficci\u00f3n_juvenil",
+        "name": "Ficci\u00f3n juvenil"
+      },
+      { "url": "https://openlibrary.org/subjects/cerdos", "name": "Cerdos" },
+      {
+        "url": "https://openlibrary.org/subjects/ara\u00f1as",
+        "name": "Ara\u00f1as"
+      },
+      { "url": "https://openlibrary.org/subjects/amistad", "name": "Amistad" },
+      {
+        "url": "https://openlibrary.org/subjects/animales_dom\u00e9sticos",
+        "name": "Animales dom\u00e9sticos"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/vida_agr\u00edcola",
+        "name": "Vida agr\u00edcola"
+      }
+    ],
+    "subject_people": [
+      {
+        "url": "https://openlibrary.org/subjects/person:fern_arable",
+        "name": "Fern Arable"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/person:wilbur",
+        "name": "Wilbur"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/person:charlotte_a._cavatica",
+        "name": "Charlotte A. Cavatica"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/person:avery_arable",
+        "name": "Avery Arable"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/person:john_arable",
+        "name": "John Arable"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/person:templeton",
+        "name": "Templeton"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/person:homer_zuckerman",
+        "name": "Homer Zuckerman"
+      }
+    ],
+    "key": "/books/OL26430313M",
+    "authors": [
+      {
+        "url": "http://openlibrary.org/authors/OL30250A/E._B._White",
+        "name": "E. B. White"
+      }
+    ],
+    "publish_date": "2017",
+    "excerpts": [
+      {
+        "comment": "First sentence.",
+        "text": "\u201cWhere's Papa going with that axe?\u201d said Fern to her mother as they were setting the table for breakfast."
+      }
+    ],
+    "publish_places": [{ "name": "New York, USA" }]
+  }
+}
