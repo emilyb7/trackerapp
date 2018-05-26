@@ -11,7 +11,7 @@ defmodule Router do
   end
   get "/books" do
     books =
-      Tracker.Book.get_books() |> Enum.map(&(get_book_data &1)) |> Poison.encode!
+      Tracker.Book.get_books() |> Poison.encode!
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, books)
@@ -52,7 +52,6 @@ defmodule Router do
       # create session
       Tracker.Session.start(book_id) |> is_integer ->
         conn |> send_resp(200, "ok")
-      true -> conn |> send_resp(500, "error")
     end
   end
 
@@ -60,7 +59,6 @@ defmodule Router do
     case Tracker.Session.finish(String.to_integer session_id) do
       :ok -> conn |> send_resp(200, "ok")
       :not_found -> conn |> send_resp(404, "not found")
-      _ -> conn |> send_resp(500, "error")
     end
   end
 
@@ -68,7 +66,4 @@ defmodule Router do
     send_resp conn, 404, "oops"
   end
 
-  def get_book_data(book) do
-    Map.drop(book, [:__meta__, :__struct__])
-  end
 end

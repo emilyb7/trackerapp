@@ -18,6 +18,7 @@ defmodule Tracker.Library do
     {:nothing, "nowt here"}
   end
 
+  # success case
   defp handle_response({:ok, %{status_code: 200, body: body}}, isbn) do
     book_data = fetch_request_body_data(body)
 

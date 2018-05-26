@@ -25,7 +25,7 @@ defmodule Tracker.Book do
 
   def get_books(limit \\ 20) do
     q = from b in Book, limit: ^limit
-    Repo.all(q)
+    Repo.all(q) |> Enum.map(&(get_book_data &1))
   end
 
   def check_book_exists(book_id) do
@@ -40,5 +40,9 @@ defmodule Tracker.Book do
     changeset = changeset(%Book{}, book_params)
     Tracker.Repo.insert(changeset)
     :ok
+  end
+
+  defp get_book_data(book) do
+    Map.drop(book, [:__meta__, :__struct__])
   end
 end
