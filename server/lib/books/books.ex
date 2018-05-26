@@ -8,12 +8,13 @@ defmodule Tracker.Book do
 
   # This is the one that includes cast
   schema "books" do
-    field :title, :string
-    field :isbn, :string
-    field :author, :string
-    field :cover, :string
+    field(:title, :string)
+    field(:isbn, :string)
+    field(:author, :string)
+    field(:cover, :string)
     timestamps()
   end
+
   @required_fields ~w(title isbn author cover)
   @optional_fields ~w()
   def changeset(book, params \\ :empty) do
@@ -22,19 +23,17 @@ defmodule Tracker.Book do
     |> unique_constraint(:isbn)
   end
 
-
   def get_books(limit \\ 20) do
-    q = from b in Book, limit: ^limit
-    Repo.all(q) |> Enum.map(&(get_book_data &1))
+    q = from(b in Book, limit: ^limit)
+    Repo.all(q) |> Enum.map(&get_book_data(&1))
   end
 
   def check_book_exists(book_id) do
-    case Repo.one(from(b in Book, where: [id: ^(book_id)])) do
+    case Repo.one(from(b in Book, where: [id: ^book_id])) do
       nil -> :not_found
       book -> :ok
     end
   end
-
 
   def create(book_params) do
     changeset = changeset(%Book{}, book_params)

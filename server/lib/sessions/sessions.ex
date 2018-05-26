@@ -8,12 +8,13 @@ defmodule Tracker.Session do
 
   # This is the one that includes cast
   schema "sessions" do
-    field :book_id, :integer
-    field :started_at, :naive_datetime
-    field :finished_at, :naive_datetime
-    field :progress, :integer
+    field(:book_id, :integer)
+    field(:started_at, :naive_datetime)
+    field(:finished_at, :naive_datetime)
+    field(:progress, :integer)
     timestamps()
   end
+
   @required_fields ~w(book_id started_at finished_at progress)
   @optional_fields ~w()
   def changeset(session, params \\ :empty) do
@@ -23,6 +24,7 @@ defmodule Tracker.Session do
 
   def create(session_params) do
     changeset = changeset(%Session{}, session_params)
+
     case Tracker.Repo.insert(changeset) do
       {:ok, record} ->
         Map.fetch!(record, :id)
@@ -37,9 +39,15 @@ defmodule Tracker.Session do
   end
 
   def finish(session_id) do
-    updated = Tracker.Repo.update_all(from(s in "sessions",
-        where: [id: ^(session_id)]),
-        set: [finished_at: NaiveDateTime.utc_now])
+    updated =
+      Tracker.Repo.update_all(
+        from(
+          s in "sessions",
+          where: [id: ^session_id]
+        ),
+        set: [finished_at: NaiveDateTime.utc_now()]
+      )
+
     case updated do
       {1, nil} -> :ok
       {0, nil} -> :not_found
@@ -48,14 +56,18 @@ defmodule Tracker.Session do
   end
 
   def get_by_book_id(book_id, params \\ :empty) do
-    q = case params do
-      :empty ->
-        (from Session, [where: [book_id: ^(book_id)]])
-      %{:finished => true} ->
-        (from(s in Session, [where: s.book_id == ^(book_id) and not is_nil(s.finished_at)]))
-      %{:finished => false} ->
-        (from(s in Session, [where: s.book_id == ^(book_id) and is_nil(s.finished_at)]))
-    end
+    q =
+      case params do
+        :empty ->
+          from(Session, where: [book_id: ^book_id])
+
+        %{:finished => true} ->
+          from(s in Session, where: s.book_id == ^book_id and not is_nil(s.finished_at))
+
+        %{:finished => false} ->
+          from(s in Session, where: s.book_id == ^book_id and is_nil(s.finished_at))
+      end
+
     Repo.all(q)
   end
 end

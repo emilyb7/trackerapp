@@ -1,7 +1,6 @@
 defmodule Tracker.Library do
-
   @user_agent [{"User-agent", "example.com"}]
-  @headers ["Accept": "Application/json; Charset=utf-8"]
+  @headers [Accept: "Application/json; Charset=utf-8"]
 
   def fetch(isbn) do
     library_url(isbn)
@@ -38,7 +37,7 @@ defmodule Tracker.Library do
   end
 
   defp fetch_request_body_data(body) do
-    Poison.decode!(body) |> Map.values |> Enum.at(0)
+    Poison.decode!(body) |> Map.values() |> Enum.at(0)
   end
 
   defp get_cover(book_data) do
