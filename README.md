@@ -19,5 +19,5 @@
 ## Improvements
 
 - Error handling in API
-- Upgrade elixir version
+- Upgrade elixir version ✅
 - Restructure routes?
