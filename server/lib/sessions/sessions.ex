@@ -68,6 +68,10 @@ defmodule Tracker.Session do
           from(s in Session, where: s.book_id == ^book_id and is_nil(s.finished_at))
       end
 
-    Repo.all(q)
+    Repo.all(q) |> Enum.map(&get_session_data(&1))
+  end
+
+  defp get_session_data(session) do
+    Map.drop(session, [:__meta__, :__struct__])
   end
 end

@@ -97,7 +97,41 @@ defmodule Router.Test do
     assert Map.fetch!(data, "isbn") === isbn
   end
 
-  test "/books:book_id/start returns 200" do
+  test "/books/:book_id/sessions returns list of sessions for a given book" do
+    test_book_id = get_test_book()
+    Session.start(test_book_id)
+
+    conn =
+      conn(:get, Path.join(["books", Integer.to_string(test_book_id), "sessions"]), "")
+      |> Router.call(@opts)
+
+    assert conn.state === :sent
+    assert conn.status === 200
+
+    res = Poison.Parser.parse!(conn.resp_body)
+    assert Enum.count(res) === 1
+  end
+
+  test "/book/:book_id/sessions returns 404 when no matching sessions found" do
+    test_book_id = get_test_book()
+
+    conn =
+      conn(:get, Path.join(["books", Integer.to_string(test_book_id), "sessions"]), "")
+      |> Router.call(@opts)
+
+    assert conn.state === :sent
+    assert conn.status === 404
+  end
+
+  test "/books/:book_id/sessions returns 400 when book doesnt exist" do
+    book_id = "999999"
+    conn = conn(:get, Path.join(["books", book_id, "sessions"]), "") |> Router.call(@opts)
+
+    assert conn.state === :sent
+    assert conn.status === 400
+  end
+
+  test "/books/:book_id/start returns 200" do
     test_book_id = get_test_book()
 
     conn =
@@ -108,13 +142,13 @@ defmodule Router.Test do
     assert conn.status === 200
   end
 
-  test "/books/:book_id/start returns 404 when book does not exist" do
+  test "/books/:book_id/start returns 400 when book does not exist" do
     conn =
       conn(:post, ~s(/books/#{999_999}/start), "")
       |> Router.call(@opts)
 
     assert conn.state === :sent
-    assert conn.status === 404
+    assert conn.status === 400
   end
 
   test "/books/:book_id/start returns 400 when session already exists" do

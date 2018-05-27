@@ -48,13 +48,33 @@ defmodule Router do
     end
   end
 
-  post "/books/:book_id/start" do
-    Tracker.Book.check_book_exists(book_id)
+  get "books/:book_id/sessions" do
+    cond do
+      Tracker.Book.check_book_exists(book_id) !== :ok ->
+        conn |> send_resp(400, "book does not exist")
 
+      true ->
+        Tracker.Session.get_by_book_id(book_id) |> handle_sessions_result(conn)
+    end
+  end
+
+  defp handle_sessions_result([], conn) do
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(404, "not found")
+  end
+
+  defp handle_sessions_result(sessions, conn) do
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, Poison.encode!(sessions))
+  end
+
+  post "/books/:book_id/start" do
     cond do
       # get book first
       Tracker.Book.check_book_exists(book_id) !== :ok ->
-        conn |> send_resp(404, "not found")
+        conn |> send_resp(400, "book does not exist found")
 
       # check for existing session
       Tracker.Session.get_by_book_id(book_id, %{finished: false}) |> Enum.count() > 0 ->
