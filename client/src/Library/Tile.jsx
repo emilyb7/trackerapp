@@ -2,15 +2,13 @@ import React from 'react'
 
 const Tile = ({ author, cover, title, }) => {
   return (
-    <li className="list pv3 ml3">
-      <div
-        style={{ height: '255px', width: '180px', }}
-        className="bg-light-silver"
-      >
+    <li className="list" style={{ maxWidth: '50vw', }}>
+      <div className="pa1">
         {cover ? (
-          <img src={cover} alt={title} />
+          <img src={cover} alt={title} style={{ maxWidth: '48vw', }} />
         ) : (
           <svg
+            style={{ maxWidth: '48vw', }}
             height={255}
             width={180}
             fill="red"
