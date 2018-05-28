@@ -3,10 +3,15 @@ defmodule Server do
   require Logger
 
   def start(_type, _args) do
-    port = System.get_env("PORT") |> String.to_integer()
+    cowboy_options = [
+      keyfile: "priv/keys/localhost.key",
+      certfile: "priv/keys/localhost.cert",
+      otp_app: :tracker,
+      port: System.get_env("PORT") |> String.to_integer()
+    ]
 
     children = [
-      Plug.Adapters.Cowboy.child_spec(scheme: :http, plug: Router, options: [port: port]),
+      Plug.Adapters.Cowboy.child_spec(scheme: :https, plug: Router, options: cowboy_options),
       Tracker.Repo
     ]
 
