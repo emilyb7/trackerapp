@@ -12,7 +12,7 @@ defmodule Router do
   end
 
   get "/books" do
-    books = Tracker.Book.get_books() |> Poison.encode!()
+    books = Tracker.Book.get_books() |> Enum.map(&get_book_data(&1)) |> Poison.encode!()
 
     conn
     |> put_resp_content_type("application/json")
@@ -48,52 +48,11 @@ defmodule Router do
     end
   end
 
-  get "books/:book_id/sessions" do
-    cond do
-      Tracker.Book.check_book_exists(book_id) !== :ok ->
-        conn |> send_resp(400, "book does not exist")
-
-      true ->
-        Tracker.Session.get_by_book_id(book_id) |> handle_sessions_result(conn)
-    end
-  end
-
-  defp handle_sessions_result([], conn) do
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(404, "not found")
-  end
-
-  defp handle_sessions_result(sessions, conn) do
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(200, Poison.encode!(sessions))
-  end
-
-  post "/books/:book_id/start" do
-    cond do
-      # get book first
-      Tracker.Book.check_book_exists(book_id) !== :ok ->
-        conn |> send_resp(400, "book does not exist found")
-
-      # check for existing session
-      Tracker.Session.get_by_book_id(book_id, %{finished: false}) |> Enum.count() > 0 ->
-        conn |> send_resp(400, "session already exists")
-
-      # create session
-      Tracker.Session.start(book_id) |> is_integer ->
-        conn |> send_resp(200, "ok")
-    end
-  end
-
-  post "/sessions/:session_id/finish" do
-    case Tracker.Session.finish(String.to_integer(session_id)) do
-      :ok -> conn |> send_resp(200, "ok")
-      :not_found -> conn |> send_resp(404, "not found")
-    end
-  end
-
   match _ do
     send_resp(conn, 404, "oops")
+  end
+
+  def get_book_data(book) do
+    Map.drop(book, [:__meta__, :__struct__])
   end
 end
