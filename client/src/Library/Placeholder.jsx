@@ -3,10 +3,10 @@ import React from 'react'
 const Placeholder = ({ title, author, id, }) => (
   <svg
     id={`placeholder_${id}`}
-    style={{ maxWidth: '48vw', height: '255px', }}
+    style={{ maxWidth: '48vw', height: '100%', }}
     height={255}
     width={180}
-    fill="red"
+    fill="silver"
     viewBox="0 0 180 255"
     xmlns="http://www.w3.org/2000/svg"
   >
