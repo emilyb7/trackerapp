@@ -3,8 +3,6 @@ import { Redirect, } from 'react-router-dom'
 
 import { get, } from '../api'
 import validateIsbn from '../isbn-validator'
-
-import Panel from './Panel'
 import Result from './Result'
 import Loading from './Loading'
 
