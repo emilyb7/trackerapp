@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect, } from 'react-redux'
 import * as API from './api'
 import Library from './Library'
 
@@ -6,20 +7,23 @@ class Books extends React.Component {
   constructor(props) {
     super(props)
     this.state = { books: [], }
-    this.fetchBooks = this.fetchBooks.bind(this)
-    this.fetchBooksSuccess = this.fetchBooksSuccess.bind(this)
+    // this.fetchBooks = this.fetchBooks.bind(this)
+    // this.fetchBooksSuccess = this.fetchBooksSuccess.bind(this)
   }
 
   componentDidMount() {
     this.fetchBooks()
   }
 
-  fetchBooks() {
+  fetchBooks = () => {
     API.get('/books').then(this.fetchBooksSuccess)
   }
 
-  fetchBooksSuccess(books) {
-    this.setState({ books, })
+  fetchBooksSuccess = books => {
+    //this.setState({ books, })
+    const dataObject = books.reduce(booksArrayToObject, {})
+    const index = getIdsIndex(books)
+    this.props.addBooks(dataObject, index)
 
     // hacky (very impure) wait for images to load
     const objects = document.getElementsByClassName('asyncImage')
@@ -44,8 +48,24 @@ class Books extends React.Component {
   }
 
   render() {
-    return <Library books={this.state.books} />
+    return <Library books={this.props.books} index={this.props.index} />
   }
 }
 
-export default Books
+const booksArrayToObject = (acc, nextBook) => ({
+  ...acc,
+  [nextBook.id]: nextBook,
+})
+
+const getIdsIndex = books => books.map(book => book.id)
+
+const mapStateToProps = state => ({
+  books: state.books,
+  index: state.index,
+})
+
+const mapDispatchToProps = dispatch => ({
+  addBooks: (books, index) => dispatch({ type: 'ADD_BOOKS', books, index, }),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Books)
