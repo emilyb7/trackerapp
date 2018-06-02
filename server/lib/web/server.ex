@@ -4,8 +4,8 @@ defmodule Server do
 
   def start(_type, _args) do
     cowboy_options = [
-      keyfile: "priv/keys/localhost.key",
-      certfile: "priv/keys/localhost.cert",
+      keyfile: "priv/keys/server.key",
+      certfile: "priv/keys/server.crt",
       otp_app: :tracker,
       port: System.get_env("PORT") |> String.to_integer()
     ]
