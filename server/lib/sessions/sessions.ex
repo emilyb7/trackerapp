@@ -15,7 +15,7 @@ defmodule Tracker.Session do
     timestamps()
   end
 
-  @required_fields ~w(book_id started_at)
+  @required_fields ~w(book_id started_at finished_at progress)
   @optional_fields ~w()
   def changeset(session, params \\ :empty) do
     session
@@ -26,18 +26,25 @@ defmodule Tracker.Session do
     changeset = changeset(%Session{}, session_params)
 
     case Tracker.Repo.insert(changeset) do
-      {:ok, _record} ->
-        :ok
+      {:ok, record} ->
+        Map.fetch!(record, :id)
 
       {:error, _changeset} ->
         :error
     end
   end
 
+  def start(book_id) do
+    create(%{book_id: book_id, started_at: NaiveDateTime.utc_now()})
+  end
+
   def finish(session_id) do
     updated =
       Tracker.Repo.update_all(
-        from(s in "sessions", where: [id: ^session_id]),
+        from(
+          s in "sessions",
+          where: [id: ^session_id]
+        ),
         set: [finished_at: NaiveDateTime.utc_now()]
       )
 
@@ -48,7 +55,23 @@ defmodule Tracker.Session do
     end
   end
 
-  def get_by_book_id(book_id) do
-    Repo.all(from(Session, where: [book_id: ^book_id]))
+  def get_by_book_id(book_id, params \\ :empty) do
+    q =
+      case params do
+        :empty ->
+          from(Session, where: [book_id: ^book_id])
+
+        %{:finished => true} ->
+          from(s in Session, where: s.book_id == ^book_id and not is_nil(s.finished_at))
+
+        %{:finished => false} ->
+          from(s in Session, where: s.book_id == ^book_id and is_nil(s.finished_at))
+      end
+
+    Repo.all(q) |> Enum.map(&get_session_data(&1))
+  end
+
+  defp get_session_data(session) do
+    Map.drop(session, [:__meta__, :__struct__])
   end
 end
