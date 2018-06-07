@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { BrowserRouter, Route, Switch, withRouter, } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, } from 'react-router-dom'
 import { createStore, } from 'redux'
 import { Provider, } from 'react-redux'
 
@@ -7,6 +7,7 @@ import Books from './Books'
 import Result from './Result'
 import LookupPage from './LookupPage'
 import Nav from './Nav'
+import Book from './Book.jsx'
 import reducer from './reducer'
 
 const store = createStore(
@@ -17,27 +18,19 @@ const store = createStore(
 )
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { query: null, }
-  }
-
   render() {
     return (
       <Provider store={store}>
         <BrowserRouter>
-          <Route
-            render={({ location, }) => (
-              <div className="code">
-                <Nav />
-                <Switch location={location}>
-                  <Route exact path="/" component={Books} />
-                  <Route path="/result/:isbn" component={withRouter(Result)} />
-                  <Route path="/add" component={LookupPage} />
-                </Switch>
-              </div>
-            )}
-          />
+          <div className="code">
+            <Nav />
+            <Switch>
+              <Route exact path="/" component={Books} />
+              <Route path="/result/:isbn" component={Result} />
+              <Route path="/add" component={LookupPage} />
+              <Route path="/library/:id" component={Book} />
+            </Switch>
+          </div>
         </BrowserRouter>
       </Provider>
     )

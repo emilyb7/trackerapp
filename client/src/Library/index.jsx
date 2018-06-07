@@ -6,7 +6,7 @@ const Library = ({ books, index, }) => {
   return (
     <div className="bg-near-white gray overflow-scroll">
       <ul className="content-start flex flex-wrap justify-around">
-        {index.length &&
+        {index.length > 0 &&
           index.map(bookId => <Tile key={bookId} {...books[bookId]} />)}
       </ul>
       <AddButton />
