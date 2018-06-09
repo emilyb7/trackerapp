@@ -85,6 +85,6 @@ defmodule Tracker.BooksTest do
   end
 
   test "get book - when book does not exist" do
-    assert Book.get_book(9999999) === nil
+    assert Book.get_book(9_999_999) === nil
   end
 end
