@@ -69,4 +69,22 @@ defmodule Tracker.BooksTest do
   test "check book exists - returns :not_found when no book exists" do
     assert Book.check_book_exists(999_999) === :not_found
   end
+
+  test "get book" do
+    test_book = %{
+      title: "Charlottes Web",
+      isbn: "9780064400558",
+      author: "E.B. White",
+      cover: "https://covers.openlibrary.org/w/id/8156475-M.jpg"
+    }
+
+    # create a book
+    Book.create(test_book)
+    test_book_id = Repo.one(from(Book)) |> Map.fetch!(:id)
+    assert Book.get_book(test_book_id).title === "Charlottes Web"
+  end
+
+  test "get book - when book does not exist" do
+    assert Book.get_book(9999999) === nil
+  end
 end

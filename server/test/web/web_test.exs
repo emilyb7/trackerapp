@@ -56,6 +56,34 @@ defmodule Router.Test do
            |> Map.get("title") === test_book.title
   end
 
+  test "/book/:id returns a single book" do
+    test_book_id = get_test_book() |> to_string
+    url = "/books/" <> test_book_id
+    conn =
+      conn(:get, url, "")
+      |> put_req_header("content-type", "application/json")
+      |> Router.call(@opts)
+
+    assert conn.state === :sent
+    assert conn.status === 200
+
+    res = Poison.Parser.parse!(conn.resp_body)
+    assert Map.fetch!(res, "title") === "Charlottes Web"
+
+  end
+
+  test "/book/:id when book does not exist" do
+    url = "/books/9999"
+    conn =
+      conn(:get, url, "")
+      |> put_req_header("content-type", "application/json")
+      |> Router.call(@opts)
+
+    assert conn.state === :sent
+    assert conn.status === 404
+
+  end
+
   test "/books/create adds book to DB" do
     test_book = File.read!("test/test-data/example.json")
 
@@ -76,7 +104,6 @@ defmodule Router.Test do
   test "/books/create throws 400 with invalid payload" do
     conn =
       conn(:post, "/books/create", "")
-      |> put_req_header("content-type", "application/json")
       |> Router.call(@opts)
 
     assert conn.state === :sent

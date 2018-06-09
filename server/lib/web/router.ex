@@ -19,6 +19,16 @@ defmodule Router do
     |> send_resp(200, books)
   end
 
+  get "/books/:id" do
+    Tracker.Book.get_book(id) |> IO.inspect
+    case Tracker.Book.get_book(id) do
+      nil -> conn |> send_resp(404, "not found")
+      book -> conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(200, Poison.encode!(book))
+    end
+  end
+
   post "/books/create" do
     case conn.body_params do
       %{"title" => _, "author" => _} ->

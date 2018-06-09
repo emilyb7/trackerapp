@@ -28,6 +28,8 @@ defmodule Tracker.Book do
     Repo.all(q) |> Enum.map(&get_book_data(&1))
   end
 
+  def get_book(book_id), do: Repo.one(from(b in Book, where: [id: ^book_id])) |> get_book_data
+
   def check_book_exists(book_id) do
     case Repo.one(from(b in Book, where: [id: ^book_id])) do
       nil -> :not_found
@@ -42,6 +44,8 @@ defmodule Tracker.Book do
   end
 
   defp get_book_data(book) do
-    Map.drop(book, [:__meta__, :__struct__])
+    unless book === nil do
+      Map.drop(book, [:__meta__, :__struct__])
+    end
   end
 end
