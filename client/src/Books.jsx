@@ -4,13 +4,6 @@ import * as API from './api'
 import Library from './Library'
 
 class Books extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { books: [], }
-    // this.fetchBooks = this.fetchBooks.bind(this)
-    // this.fetchBooksSuccess = this.fetchBooksSuccess.bind(this)
-  }
-
   componentDidMount() {
     this.fetchBooks()
   }
@@ -20,7 +13,6 @@ class Books extends React.Component {
   }
 
   fetchBooksSuccess = books => {
-    //this.setState({ books, })
     const dataObject = books.reduce(booksArrayToObject, {})
     const index = getIdsIndex(books)
     this.props.addBooks(dataObject, index)
