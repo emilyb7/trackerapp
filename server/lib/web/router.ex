@@ -44,7 +44,7 @@ defmodule Router do
     end
   end
 
-  get "/lookup" do
+  get "/lookup/:isbn" do
     case conn.params do
       %{"isbn" => isbn} ->
         case Tracker.Library.fetch(isbn) do

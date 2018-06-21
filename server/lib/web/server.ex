@@ -22,11 +22,14 @@ defmodule Server do
   end
 
   def start(_type, _args) do
-
     env = Mix.env()
 
     children = [
-      Plug.Adapters.Cowboy.child_spec(scheme: get_protocol(env), plug: Router, options: get_options(env)),
+      Plug.Adapters.Cowboy.child_spec(
+        scheme: get_protocol(env),
+        plug: Router,
+        options: get_options(env)
+      ),
       Tracker.Repo
     ]
 

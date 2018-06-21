@@ -114,7 +114,7 @@ defmodule Router.Test do
     isbn = "9780345505101"
 
     conn =
-      conn(:get, "/lookup?isbn=" <> isbn, "")
+      conn(:get, "/lookup/" <> isbn, "")
       |> Router.call(@opts)
 
     assert conn.state === :sent
