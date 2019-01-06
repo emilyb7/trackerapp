@@ -1,4 +1,8 @@
 import React from 'react'
+import { isEmpty, map, } from 'ramda'
+import LibraryItem from './LibraryItem'
+
+import Banner from '../lib/Banner'
 
 class Library extends React.Component {
   componentDidMount() {
@@ -11,20 +15,41 @@ class Library extends React.Component {
     if (loading) return <p>loading</p>
     if (error)
       return (
-        <div className="flex items-center justify-center pa4 bg-light-yellow">
-          <svg className="w1" data-icon="info" viewBox="0 0 32 32">
-            <title>info icon</title>
-            <path d="M16 0 A16 16 0 0 1 16 32 A16 16 0 0 1 16 0 M19 15 L13 15 L13 26 L19 26 z M16 6 A3 3 0 0 0 16 12 A3 3 0 0 0 16 6" />
-          </svg>
-          <span className="lh-title ml3">
-            Something went a bit wrong while loading the library
-          </span>
-        </div>
+        <Banner
+          content={
+            <span className="lh-title ml3">
+              Something went a bit wrong while loading the library
+            </span>
+          }
+        />
       )
-    {
-      /* @todo: case for empty state too */
-    }
-    return <p>books</p>
+    if (!error && !loading && isEmpty(books))
+      return (
+        <p>
+          This will look better once you've added some books to your library
+        </p>
+      )
+    return (
+      <div>
+        <ul className="mw6 center">
+          {map(book => (
+            <li key={book.id} className="list">
+              <LibraryItem {...book} />
+            </li>
+          ))(books)}
+        </ul>
+        <a
+          className="fixed"
+          to="/add/scan"
+          style={{ bottom: '12px', right: '12px', }}
+          title="Add new book"
+        >
+          <div className="br-100 flex justify-center items-center h3 pointer bg-gray shadow-5 w3">
+            <i className="fas fa-plus f3 white" />
+          </div>
+        </a>
+      </div>
+    )
   }
 }
 export default Library
