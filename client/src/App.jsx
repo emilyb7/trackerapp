@@ -1,20 +1,22 @@
 import React, { Component, } from 'react'
 import { BrowserRouter, Route, Switch, } from 'react-router-dom'
-import { createStore, } from 'redux'
+import { applyMiddleware, createStore, combineReducers, } from 'redux'
 import { Provider, } from 'react-redux'
+import { composeWithDevTools, } from 'redux-devtools-extension'
+import thunk from 'redux-thunk'
 
-import Books from './Books'
-import Result from './Result'
-import LookupPage from './LookupPage'
+import Library, { libraryReducer, } from './Library'
+// import Result from './Result'
+// import LookupPage from './LookupPage'
 import Nav from './Nav'
-import Book from './Book.jsx'
+// import Book from './Book.jsx'
 import reducer from './reducer'
 
 const store = createStore(
-  reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__
-    ? window.__REDUX_DEVTOOLS_EXTENSION__()
-    : f => f
+  combineReducers({
+    library: libraryReducer,
+  }),
+  composeWithDevTools(applyMiddleware(thunk))
 )
 
 class App extends Component {
@@ -25,10 +27,10 @@ class App extends Component {
           <div className="code">
             <Nav />
             <Switch>
-              <Route exact path="/" component={Books} />
-              <Route path="/result/:isbn" component={Result} />
+              <Route exact path="/" component={Library} />
+              {/*<Route path="/result/:isbn" component={Result} />
               <Route path="/add" component={LookupPage} />
-              <Route path="/library/:id" component={Book} />
+              <Route path="/library/:id" component={Book} />*/}
             </Switch>
           </div>
         </BrowserRouter>
