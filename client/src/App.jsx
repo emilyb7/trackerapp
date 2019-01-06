@@ -6,11 +6,7 @@ import { composeWithDevTools, } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 
 import Library, { libraryReducer, } from './Library'
-// import Result from './Result'
-// import LookupPage from './LookupPage'
-import Nav from './Nav'
-// import Book from './Book.jsx'
-import reducer from './reducer'
+import NewBook from './NewBook'
 
 const store = createStore(
   combineReducers({
@@ -25,9 +21,9 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <div className="code">
-            <Nav />
             <Switch>
               <Route exact path="/" component={Library} />
+              <Route path="/new" component={NewBook} />
               {/*<Route path="/result/:isbn" component={Result} />
               <Route path="/add" component={LookupPage} />
               <Route path="/library/:id" component={Book} />*/}

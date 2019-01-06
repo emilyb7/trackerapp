@@ -1,33 +1,19 @@
 import React from 'react'
-import { Link, withRouter, } from 'react-router-dom'
+import { Link, } from 'react-router-dom'
 
-const navMap = {
-  defaults: { header: 'my library', back: false, backTo: '/', },
-  add: { header: 'add new book', back: true, backTo: '/', },
-  result: {
-    header: 'result',
-    back: true,
-    backTo: { pathname: '/add/scan', state: { started: true, }, },
-  },
-  scan: { header: 'scan', },
-}
-
-const Nav = ({ location, }) => {
-  const navSettings = navMap[location.pathname.split('/')[1]] || navMap.defaults
-  const navHeader = navSettings.header
-
+const Nav = ({ back = false, text = '', }) => {
   return (
-    <nav className="bg-dark-gray silver pa3 tracked ttu">
-      <h3 className="App-title pointer">
-        {navSettings.back && (
-          <Link to={navSettings.backTo || navMap.defaults.backTo}>
-            <i className="fas fa-arrow-left ph3 pointer silver" />
+    <header className="bg-dark-gray w-100 ph3 pv3 pv4-ns ph4-m ph5-l">
+      <nav className="f6 fw6 ttu tracked">
+        {back && (
+          <Link className="link dim white dib mr3" to="/">
+            <i className="fa fa-arrow-left white" />
           </Link>
         )}
-        {navHeader}
-      </h3>
-    </nav>
+        <span className="white dib mr3">{text}</span>
+      </nav>
+    </header>
   )
 }
 
-export default withRouter(Nav)
+export default Nav
