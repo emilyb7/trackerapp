@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link, } from 'react-router-dom'
 
 const Book = ({ book: { title, author, cover, isbn, ...rest }, }) => (
   <div className="pa2">
