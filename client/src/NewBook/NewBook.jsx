@@ -1,8 +1,10 @@
 import React from 'react'
+import { connect, } from 'react-redux'
+import { push, } from 'connected-react-router'
 import Nav from '../Nav'
 import NewBookForm from './NewBookForm'
 
-const NewBook = () => (
+const NewBook = ({ handleSubmit, }) => (
   <div>
     <Nav text="Add a new book" back={true} />
     <nav className="bb b--light-silver pa3 pa4-ns flex justify-around">
@@ -14,9 +16,15 @@ const NewBook = () => (
       </a>
     </nav>
     <div className="pa4-l">
-      <NewBookForm />
+      <NewBookForm handleSubmit={handleSubmit} />
     </div>
   </div>
 )
 
-export default NewBook
+const mapDispatchToProps = dispatch => ({
+  handleSubmit: isbn => {
+    return dispatch(push(`/new?ISBN=${isbn}`))
+  },
+})
+
+export default connect(null, mapDispatchToProps)(NewBook)

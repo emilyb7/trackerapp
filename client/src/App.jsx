@@ -1,5 +1,12 @@
 import React, { Component, } from 'react'
-import { BrowserRouter, Route, Switch, } from 'react-router-dom'
+import { Route, Switch, } from 'react-router-dom'
+import {
+  connectRouter,
+  ConnectedRouter,
+  routerMiddleware,
+} from 'connected-react-router'
+
+import { createBrowserHistory, } from 'history'
 import { applyMiddleware, createStore, combineReducers, } from 'redux'
 import { Provider, } from 'react-redux'
 import { composeWithDevTools, } from 'redux-devtools-extension'
@@ -8,18 +15,21 @@ import thunk from 'redux-thunk'
 import Library, { libraryReducer, } from './Library'
 import NewBook from './NewBook'
 
+const history = createBrowserHistory()
+
 const store = createStore(
   combineReducers({
     library: libraryReducer,
+    router: connectRouter(history),
   }),
-  composeWithDevTools(applyMiddleware(thunk))
+  composeWithDevTools(applyMiddleware(thunk, routerMiddleware(history)))
 )
 
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <BrowserRouter>
+        <ConnectedRouter history={history}>
           <div className="code">
             <Switch>
               <Route exact path="/" component={Library} />
@@ -29,7 +39,7 @@ class App extends Component {
               <Route path="/library/:id" component={Book} />*/}
             </Switch>
           </div>
-        </BrowserRouter>
+        </ConnectedRouter>
       </Provider>
     )
   }
