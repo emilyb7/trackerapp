@@ -23,7 +23,7 @@ const NewBook = ({ handleSubmit, }) => (
 
 const mapDispatchToProps = dispatch => ({
   handleSubmit: isbn => {
-    return dispatch(push(`/new?ISBN=${isbn}`))
+    return dispatch(push(`/search?ISBN=${isbn}`))
   },
 })
 

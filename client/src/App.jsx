@@ -14,6 +14,7 @@ import thunk from 'redux-thunk'
 
 import Library, { libraryReducer, } from './Library'
 import NewBook from './NewBook'
+import Search from './Search'
 
 const history = createBrowserHistory()
 
@@ -34,9 +35,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Library} />
               <Route path="/new" component={NewBook} />
-              {/*<Route path="/result/:isbn" component={Result} />
-              <Route path="/add" component={LookupPage} />
-              <Route path="/library/:id" component={Book} />*/}
+              <Route path="/search" component={Search} />
             </Switch>
           </div>
         </ConnectedRouter>
