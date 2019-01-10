@@ -14,7 +14,7 @@ import thunk from 'redux-thunk'
 
 import Library, { libraryReducer, } from './Library'
 import NewBook from './NewBook'
-import Search from './Search'
+import Search, { searchReducer, } from './Search'
 
 const history = createBrowserHistory()
 
@@ -22,6 +22,7 @@ const store = createStore(
   combineReducers({
     library: libraryReducer,
     router: connectRouter(history),
+    search: searchReducer,
   }),
   composeWithDevTools(applyMiddleware(thunk, routerMiddleware(history)))
 )
