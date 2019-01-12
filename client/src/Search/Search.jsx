@@ -27,6 +27,11 @@ class Search extends React.Component {
     searchBooks(ISBN)
   }
 
+  addBookToLibrary = () => {
+    const { addToLibraryAndRedirect, books: book, } = this.props
+    addToLibraryAndRedirect(book)
+  }
+
   render = () => {
     const ISBN = isbnFromProps(this.props)
 
@@ -34,16 +39,16 @@ class Search extends React.Component {
       return <Redirect to="/new" />
     }
 
-    const { books: book, error, loading, } = this.props
-    console.log('🍖', book, error, loading)
+    const { addToLibraryError, books: book, searchError, loading, } = this.props
 
     return (
       <div>
         <Nav back={true} text={`Search: (ISBN ${ISBN})`} />
         {loading && <p>loading</p>}
-        {!loading && error && <p>error :(</p>}
+        {!loading && searchError && <p>searchError :(</p>}
+        {!loading && addToLibraryError && <p>Add to library error :(</p>}
         {!loading &&
-          !error &&
+          !searchError &&
           !book && <p>We can't find that book right now :(</p>}
         {!loading &&
           book && (
@@ -69,7 +74,7 @@ class Search extends React.Component {
                     </h1>
                     <h2 className="f6 fw4 mt2 mb0 black-60">{book.author}</h2>
                     <dl className="mt2 f6">
-                      <dt>Add to my library</dt>
+                      <dt onClick={this.addBookToLibrary}>Add to my library</dt>
                     </dl>
                   </div>
                 </a>

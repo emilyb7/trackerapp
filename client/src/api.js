@@ -8,11 +8,12 @@ const get = url =>
       throw err
     })
 
-const post = (url, options = {}) =>
-  Axios.post(config().server + url, options)
+const post = (url, options = {}) => {
+  return Axios.post(config().server + url, { ...options, mode: 'cors', })
     .then(res => res.data)
     .catch(err => {
       throw err
     })
+}
 
 export { get, post, }
