@@ -1,7 +1,7 @@
 import React from 'react'
 import querystring from 'querystring'
 import { compose, prop, slice, } from 'ramda'
-import { Redirect, } from 'react-router-dom'
+import { Link, Redirect, } from 'react-router-dom'
 import validate from '../isbn-validator'
 import Nav from '../Nav'
 
@@ -35,16 +35,20 @@ class Search extends React.Component {
     }
 
     const { books: book, error, loading, } = this.props
+    console.log('🍖', book, error, loading)
 
     return (
       <div>
         <Nav back={true} text={`Search: (ISBN ${ISBN})`} />
         {loading && <p>loading</p>}
-        {!loading && error && <p>error</p>}
+        {!loading && error && <p>error :(</p>}
+        {!loading &&
+          !error &&
+          !book && <p>We can't find that book right now :(</p>}
         {!loading &&
           book && (
             <div>
-              <p className="pv3">
+              <p className="pl2 pv3">
                 Success! We found a book matching your search
               </p>
               <article className="bt bb b--black-10">
@@ -70,6 +74,9 @@ class Search extends React.Component {
                   </div>
                 </a>
               </article>
+              <div className={'pv3 pl2'}>
+                <Link to="/new">Try another search query</Link>
+              </div>
             </div>
           )}
       </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect, } from 'react-redux'
 import { push, } from 'connected-react-router'
+
 import Nav from '../Nav'
 import NewBookForm from './NewBookForm'
 
@@ -8,10 +9,10 @@ const NewBook = ({ handleSubmit, }) => (
   <div>
     <Nav text="Add a new book" back={true} />
     <nav className="bb b--light-silver pa3 pa4-ns flex justify-around">
-      <a className="link dim black b f6 f5-ns mr3" href="#" title="Home">
+      <a className="link dim black b f6 f5-ns mr3" title="Home">
         ISBN
       </a>
-      <a className="link dim gray f6 f5-ns mr3" href="#" title="Home">
+      <a className="link dim gray f6 f5-ns mr3" title="Home">
         Scan
       </a>
     </nav>

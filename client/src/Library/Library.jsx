@@ -46,6 +46,7 @@ class Library extends React.Component {
           to="/new"
           style={{ bottom: '12px', right: '12px', }}
           title="Add new book"
+          tabIndex={1}
         >
           <div className="br-100 flex justify-center items-center h3 pointer bg-gray shadow-5 w3">
             <i className="fas fa-plus f3 white" />

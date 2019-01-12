@@ -1,8 +1,13 @@
 import React from 'react'
-import { equals, compose, last, type, } from 'ramda'
+import classnames from 'classnames'
+import { equals, compose, last, replace, trim, type, } from 'ramda'
 import validate from '../isbn-validator'
 
 const isNumber = compose(equals('Number'), type)
+
+const sanitiseIsbn = compose(replace(/-/g, ''), trim)
+
+const toInt = n => parseInt(n, 10)
 
 class NewBookForm extends React.Component {
   constructor(props) {
@@ -11,9 +16,13 @@ class NewBookForm extends React.Component {
   }
 
   onChange = ({ target: { value, }, }) => {
-    const int = compose(parseInt, last)(value)
+    const lastDigit = compose(last, trim)(value)
 
-    if (value === '' || (isNumber(int) && int > -1)) {
+    if (
+      value === '' ||
+      (isNumber(toInt(lastDigit)) && toInt(lastDigit) > -1) ||
+      (this.state.isbn !== '' && lastDigit === '-')
+    ) {
       this.setState({ isbn: value, })
     }
   }
@@ -22,11 +31,11 @@ class NewBookForm extends React.Component {
     e.preventDefault()
     const { isbn, } = this.state
     const { handleSubmit, } = this.props
-    return handleSubmit(isbn)
+    return handleSubmit(sanitiseIsbn(isbn))
   }
 
   render = () => {
-    const valid = validate(this.state.isbn)
+    const valid = compose(validate, sanitiseIsbn)(this.state.isbn)
 
     return (
       <form
@@ -49,7 +58,10 @@ class NewBookForm extends React.Component {
               onChange={this.onChange}
             />
             <input
-              className="code f6 f5-l button-reset fl pv3 tc bn bg-animate bg-dark-gray hover-bg-black white pointer w-100 w-25-m w-20-l br2-ns br--right-ns ttu"
+              className={classnames(
+                'code f6 f5-l button-reset fl pv3 tc bn bg-animate bg-dark-gray hover-bg-black white pointer w-100 w-25-m w-20-l br2-ns br--right-ns ttu',
+                { 'o-50': !valid, }
+              )}
               type="submit"
               value="Search"
               disabled={!valid}

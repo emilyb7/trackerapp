@@ -4,7 +4,11 @@ import Placeholder from './LibraryItemPlaceholder'
 const LibraryItem = ({ author, cover, id, title, }) => {
   return (
     <article className="bt bb b--black-10">
-      <a className="link dt w-100 bb b--black-10 pb2 mt2 dim blue" href="#0">
+      <a
+        className="link dt w-100 bb b--black-10 pb2 mt2 dim blue"
+        href="#0"
+        tabIndex={2}
+      >
         <div className="dtc w3">
           {cover ? (
             <img src={cover} className="db w-100" alt={title} />

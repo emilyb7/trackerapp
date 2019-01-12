@@ -13,7 +13,8 @@ function searchReducer(state = initialState, { type, payload, }) {
     case SEARCH_SUCCESS:
       return { ...state, books: payload.results, loading: false, error: null, }
     case SEARCH_ERROR:
-      return { ...state, books: null, error: payload.error, }
+      console.log('🥦', 'SEARCH_ERROR', payload)
+      return { ...state, books: null, loading: false, error: payload.error, }
     default:
       return state
   }
