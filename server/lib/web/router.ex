@@ -100,10 +100,19 @@ defmodule Router do
     end
   end
 
-  get "/sessions" do
+  get "/session" do
     conn = fetch_query_params(conn)
     sessions = Tracker.Session.get_by_query(conn.params)
-    conn |> send_resp(200, Poison.encode!(sessions))
+    book_ids = Enum.map(sessions, fn %{book_id: book_id} -> book_id end)
+
+    book_lookup =
+      Tracker.Book.get_by_ids(book_ids)
+      |> Enum.reduce(%{}, fn x, acc -> Map.put(acc, x.id, x) end)
+
+    sessions_with_books =
+      Enum.map(sessions, fn s -> Map.put(s, "book", Map.fetch!(book_lookup, s.book_id)) end)
+
+    conn |> send_resp(200, Poison.encode!(sessions_with_books))
   end
 
   post "/sessions/:session_id/finish" do

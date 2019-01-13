@@ -141,7 +141,8 @@ defmodule Router.Test do
     assert Enum.count(res) === 1
   end
 
-  test "/sessions returns sessions matching the given query" do
+  @tag :wip
+  test "/session returns sessions matching the given query" do
     test_book_started = get_test_book()
     Session.start(test_book_started)
 
@@ -150,7 +151,7 @@ defmodule Router.Test do
     Session.finish(session_id)
 
     conn =
-      conn(:get, "/sessions?finished=false", "")
+      conn(:get, "/session?finished=false&expand=BOOK", "")
       |> Router.call(@opts)
 
     assert conn.state === :sent
@@ -158,6 +159,10 @@ defmodule Router.Test do
 
     res = Poison.Parser.parse!(conn.resp_body)
     assert Enum.count(res) === 1
+
+    [session] = res
+
+    assert Map.fetch!(session, "book") |> Map.fetch!("id") === test_book_started
   end
 
   test "/book/:book_id/sessions returns 404 when no matching sessions found" do

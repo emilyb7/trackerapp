@@ -4,7 +4,7 @@ defmodule Tracker.Session do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Tracker.{Session, Repo}
+  alias Tracker.{Session, Book, Repo}
 
   # This is the one that includes cast
   schema "sessions" do
@@ -62,7 +62,10 @@ defmodule Tracker.Session do
           from(Session)
 
         %{"finished" => "false"} ->
-          from(s in Session, where: is_nil(s.finished_at))
+          from(
+            s in Session,
+            where: is_nil(s.finished_at)
+          )
       end
 
     Repo.all(q) |> Enum.map(&get_session_data(&1))

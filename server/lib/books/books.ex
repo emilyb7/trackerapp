@@ -30,6 +30,9 @@ defmodule Tracker.Book do
 
   def get_book(book_id), do: Repo.one(from(b in Book, where: [id: ^book_id])) |> get_book_data
 
+  def get_by_ids(ids),
+    do: Repo.all(from(b in Book, where: b.id in ^ids)) |> Enum.map(&get_book_data(&1))
+
   def check_book_exists(book_id) do
     case Repo.one(from(b in Book, where: [id: ^book_id])) do
       nil -> :not_found
