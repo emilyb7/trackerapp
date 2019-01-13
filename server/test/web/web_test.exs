@@ -12,15 +12,17 @@ defmodule Router.Test do
   end
 
   def get_test_book() do
+    isbn = :rand.uniform(1000) |> Integer.to_string()
+
     %{
       title: "Charlottes Web",
-      isbn: "9780064400558",
+      isbn: isbn,
       author: "E.B. White",
       cover: "https://covers.openlibrary.org/w/id/8156475-M.jpg"
     }
     |> Book.create()
 
-    Repo.one(from(b in Book)) |> Map.fetch!(:id)
+    Repo.one(from(b in Book, where: b.isbn == ^isbn)) |> Map.fetch!(:id)
   end
 
   test "returns welcome" do
@@ -130,6 +132,25 @@ defmodule Router.Test do
 
     conn =
       conn(:get, Path.join(["books", Integer.to_string(test_book_id), "sessions"]), "")
+      |> Router.call(@opts)
+
+    assert conn.state === :sent
+    assert conn.status === 200
+
+    res = Poison.Parser.parse!(conn.resp_body)
+    assert Enum.count(res) === 1
+  end
+
+  test "/sessions returns sessions matching the given query" do
+    test_book_started = get_test_book()
+    Session.start(test_book_started)
+
+    test_book_finished = get_test_book()
+    session_id = Session.start(test_book_finished)
+    Session.finish(session_id)
+
+    conn =
+      conn(:get, "/sessions?finished=false", "")
       |> Router.call(@opts)
 
     assert conn.state === :sent

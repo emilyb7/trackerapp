@@ -55,6 +55,19 @@ defmodule Tracker.Session do
     end
   end
 
+  def get_by_query(query \\ :empty) do
+    q =
+      case query do
+        :empty ->
+          from(Session)
+
+        %{"finished" => "false"} ->
+          from(s in Session, where: is_nil(s.finished_at))
+      end
+
+    Repo.all(q) |> Enum.map(&get_session_data(&1))
+  end
+
   def get_by_book_id(book_id, params \\ :empty) do
     q =
       case params do

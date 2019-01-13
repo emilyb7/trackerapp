@@ -20,7 +20,7 @@ defmodule Router do
   end
 
   get "/books/:id" do
-    Tracker.Book.get_book(id) |> IO.inspect()
+    Tracker.Book.get_book(id)
 
     case Tracker.Book.get_book(id) do
       nil ->
@@ -98,6 +98,12 @@ defmodule Router do
       Tracker.Session.start(book_id) |> is_integer ->
         conn |> send_resp(200, "ok")
     end
+  end
+
+  get "/sessions" do
+    conn = fetch_query_params(conn)
+    sessions = Tracker.Session.get_by_query(conn.params)
+    conn |> send_resp(200, Poison.encode!(sessions))
   end
 
   post "/sessions/:session_id/finish" do
