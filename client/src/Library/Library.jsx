@@ -35,9 +35,9 @@ class Library extends React.Component {
       <div>
         <Nav text="Your library" />
         <ul className="mw6 center">
-          {map(book => (
-            <li key={book.id} className="list">
-              <LibraryItem {...book} />
+          {map(({ id, book, ...session }) => (
+            <li key={id} className="list">
+              <LibraryItem {...book} session={session} />
             </li>
           ))(books)}
         </ul>

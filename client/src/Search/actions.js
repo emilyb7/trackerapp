@@ -22,14 +22,16 @@ function searchBooks(ISBN) {
 export { searchBooks, }
 
 function addToLibrary(bookDetails) {
-  console.log('🥄', bookDetails)
   return async dispatch => {
     dispatch({ type: ADD_TO_LIBRARY_START, payload: {}, })
-    await post('/books/create', bookDetails)
-      .then(() => dispatch({ type: ADD_TO_LIBRARY_SUCCESS, payload: {}, }))
-      .catch(error =>
+    return post('/session', bookDetails)
+      .then(data => {
+        dispatch({ type: ADD_TO_LIBRARY_SUCCESS, payload: {}, })
+        return data
+      })
+      .catch(error => {
         dispatch({ type: ADD_TO_LIBRARY_ERROR, payload: { error, }, })
-      )
+      })
   }
 }
 

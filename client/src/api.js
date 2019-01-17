@@ -10,7 +10,7 @@ const get = url =>
 
 const post = (url, options = {}) => {
   return Axios.post(config().server + url, { ...options, mode: 'cors', })
-    .then(res => res.data)
+    .then(({ data, }) => data)
     .catch(err => {
       throw err
     })
