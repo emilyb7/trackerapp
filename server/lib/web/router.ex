@@ -44,6 +44,30 @@ defmodule Router do
     end
   end
 
+  post "/session" do
+    case conn.body_params do
+      %{"title" => _, "author" => _, "isbn" => isbn} ->
+        book = Tracker.Book.get_by_isbn(isbn)
+
+        case book do
+          %{:id => book_id} ->
+            s = Tracker.Session.create(%{book_id: book_id, started_at: NaiveDateTime.utc_now()})
+            send_resp(conn, 201, Poison.encode!(%{id: s}))
+
+
+          nil ->
+            {:ok, b} = Tracker.Book.create(conn.body_params)
+            s = Tracker.Session.create(%{book_id: b.id})
+            send_resp(conn, 201, Poison.encode!(%{id: s}))
+
+        end
+
+
+      _ ->
+        send_resp(conn, 400, "invalid payload")
+    end
+  end
+
   get "/lookup/:isbn" do
     case conn.params do
       %{"isbn" => isbn} ->

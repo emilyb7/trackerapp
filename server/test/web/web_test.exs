@@ -141,7 +141,6 @@ defmodule Router.Test do
     assert Enum.count(res) === 1
   end
 
-  @tag :wip
   test "/session returns sessions matching the given query" do
     test_book_started = get_test_book()
     Session.start(test_book_started)
@@ -163,6 +162,23 @@ defmodule Router.Test do
     [session] = res
 
     assert Map.fetch!(session, "book") |> Map.fetch!("id") === test_book_started
+  end
+
+  test "POST /session creates a session and a book" do
+    test_isbn = :rand.uniform(1000) |> Integer.to_string()
+
+    test_book =
+      File.read!("test/test-data/example.json")
+      |> Poison.decode!()
+      |> Map.put("isbn", test_isbn)
+
+    conn =
+      conn(:post, "/session", test_book)
+      |> put_req_header("content-type", "application/json")
+      |> Router.call(@opts)
+
+    assert conn.state === :sent
+    assert conn.status === 201
   end
 
   test "/book/:book_id/sessions returns 404 when no matching sessions found" do

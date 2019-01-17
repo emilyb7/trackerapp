@@ -7,38 +7,32 @@ defmodule Tracker.SessionsTest do
 
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
-
-    %{
-      title: "Charlottes Web",
-      isbn: "9780064400558",
-      author: "E.B. White",
-      cover: "https://covers.openlibrary.org/w/id/8156475-M.jpg"
-    }
-    |> Book.create()
   end
 
   def get_test_book_id do
-    Repo.one(from(b in Book)) |> Map.fetch!(:id)
+    {:ok, book} =
+      Book.create(%{
+        title: "Charlottes Web",
+        isbn: "9780064400558",
+        author: "E.B. White",
+        cover: "https://covers.openlibrary.org/w/id/8156475-M.jpg"
+      })
+
+    Map.fetch!(book, :id)
   end
 
   test "creating a session" do
-    previousCount =
-      Session
-      |> Repo.all()
-      |> Enum.count()
+    test_book_id = get_test_book_id()
 
-    test_book_id = Repo.one(from(b in Book)) |> Map.fetch!(:id)
+    Session.create(%{book_id: test_book_id, started_at: NaiveDateTime.utc_now()})
 
-    assert is_integer(
-             Session.create(%{book_id: get_test_book_id(), started_at: NaiveDateTime.utc_now()})
-           )
-
-    assert(Session |> Repo.all() |> Enum.count() === previousCount + 1)
-    assert(Repo.all(from(s in Session, where: [book_id: ^test_book_id])) |> Enum.count() == 1)
+    assert Repo.one(from(s in Session, where: [book_id: ^test_book_id]))
   end
 
   test "starting a session" do
-    assert is_integer(Session.start(get_test_book_id()))
+    book_id = get_test_book_id()
+    session = Session.start(book_id)
+    assert is_integer(session)
   end
 
   test "finishing a session" do
@@ -57,7 +51,7 @@ defmodule Tracker.SessionsTest do
 
   test "get sessions by book id - success" do
     test_book_id = get_test_book_id()
-    Session.create(%{book_id: get_test_book_id(), started_at: NaiveDateTime.utc_now()})
+    Session.create(%{book_id: test_book_id, started_at: NaiveDateTime.utc_now()})
     assert Session.get_by_book_id(test_book_id) |> Enum.count() === 1
   end
 

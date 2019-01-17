@@ -15,12 +15,15 @@ defmodule Tracker.BooksTest do
       |> Repo.all()
       |> Enum.count()
 
-    assert Book.create(%{
-             title: "Charlottes Web",
-             isbn: "9780064400558",
-             author: "E.B. White",
-             cover: "https://covers.openlibrary.org/w/id/8156475-M.jpg"
-           }) === :ok
+    {:ok, book} =
+      Book.create(%{
+        title: "Charlottes Web",
+        isbn: "9780064400558",
+        author: "E.B. White",
+        cover: "https://covers.openlibrary.org/w/id/8156475-M.jpg"
+      })
+
+    assert book.title === "Charlottes Web"
 
     newCount =
       Book

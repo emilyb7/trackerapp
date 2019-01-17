@@ -30,6 +30,8 @@ defmodule Tracker.Book do
 
   def get_book(book_id), do: Repo.one(from(b in Book, where: [id: ^book_id])) |> get_book_data
 
+  def get_by_isbn(isbn), do: Repo.one(from(b in Book, where: [isbn: ^isbn])) |> get_book_data
+
   def get_by_ids(ids),
     do: Repo.all(from(b in Book, where: b.id in ^ids)) |> Enum.map(&get_book_data(&1))
 
@@ -43,7 +45,6 @@ defmodule Tracker.Book do
   def create(book_params) do
     changeset = changeset(%Book{}, book_params)
     Tracker.Repo.insert(changeset)
-    :ok
   end
 
   defp get_book_data(book) do
