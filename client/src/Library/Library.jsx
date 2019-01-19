@@ -25,16 +25,16 @@ class Library extends React.Component {
           }
         />
       )
-    if (!error && !loading && isEmpty(books))
-      return (
-        <p>
-          This will look better once you've added some books to your library
-        </p>
-      )
+
     return (
       <div>
         <Nav text="Your library" />
         <ul className="mw6 center">
+          {!error && !loading && isEmpty(books) && (
+            <p>
+              This will look better once you've added some books to your library
+            </p>
+          )}
           {map(({ id, book, ...session }) => (
             <li key={id} className="list">
               <LibraryItem
