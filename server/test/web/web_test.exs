@@ -1,3 +1,4 @@
+
 defmodule Router.Test do
   import Ecto.Query
   use ExUnit.Case
@@ -232,11 +233,11 @@ defmodule Router.Test do
     assert conn.status === 400
   end
 
-  test "/sessions/:session_id/finish returns 200" do
+  test "PUT /session/:session_id/finish returns 200" do
     session_id = Session.start(get_test_book())
 
     conn =
-      conn(:post, ~s(/sessions/#{session_id}/finish), "")
+      conn(:put, ~s(/session/#{session_id}/finish), "")
       |> Router.call(@opts)
 
     assert conn.state === :sent

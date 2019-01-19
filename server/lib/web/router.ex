@@ -139,7 +139,7 @@ defmodule Router do
     conn |> send_resp(200, Poison.encode!(sessions_with_books))
   end
 
-  post "/sessions/:session_id/finish" do
+  put "/session/:session_id/finish" do
     case Tracker.Session.finish(String.to_integer(session_id)) do
       :ok -> conn |> send_resp(200, "ok")
       :not_found -> conn |> send_resp(404, "not found")
