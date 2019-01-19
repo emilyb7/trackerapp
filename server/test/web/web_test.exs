@@ -142,7 +142,7 @@ defmodule Router.Test do
     assert Enum.count(res) === 1
   end
 
-  test "/session returns sessions matching the given query" do
+  test "GET /session returns sessions matching the given query" do
     test_book_started = get_test_book()
     Session.start(test_book_started)
 
@@ -163,6 +163,26 @@ defmodule Router.Test do
     [session] = res
 
     assert Map.fetch!(session, "book") |> Map.fetch!("id") === test_book_started
+  end
+
+
+  test "GET /session doesnt break if there are no sessions in DB" do
+    Repo.delete_all(Session)
+    conn =
+      conn(:get, "/session?finished=false&expand=BOOK", "")
+      |> Router.call(@opts)
+
+    assert conn.state === :sent
+    assert conn.status === 200
+  end
+
+  test "GET /session doesnt break if request without querystring made" do
+    conn =
+      conn(:get, "/session", "")
+      |> Router.call(@opts)
+
+    assert conn.state === :sent
+    assert conn.status === 200
   end
 
   test "POST /session creates a session and a book" do

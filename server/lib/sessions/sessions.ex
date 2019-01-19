@@ -66,6 +66,8 @@ defmodule Tracker.Session do
             s in Session,
             where: is_nil(s.finished_at)
           )
+        _ ->
+          from(Session)
       end
 
     Repo.all(q) |> Enum.map(&get_session_data(&1))
