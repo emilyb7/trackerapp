@@ -16,4 +16,11 @@ const post = (url, options = {}) => {
     })
 }
 
-export { get, post, }
+const put = url =>
+  Axios.put(config().server + url, { mode: 'cors', })
+    .then(res => res.data)
+    .catch(err => {
+      throw err
+    })
+
+export { get, post, put, }

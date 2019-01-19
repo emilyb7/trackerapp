@@ -72,6 +72,10 @@ video {
   min-height: 100vh;
 }
 
+.top-50 {
+  top: 50%;
+}
+
 @keyframes rotate {
   0% {
     transform: rotate(0deg);

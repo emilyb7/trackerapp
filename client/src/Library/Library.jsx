@@ -13,7 +13,7 @@ class Library extends React.Component {
   }
 
   render = () => {
-    const { books, loading, error, } = this.props
+    const { books, loading, error, finishSession, } = this.props
     if (loading) return <p>loading</p>
     if (error)
       return (
@@ -37,7 +37,11 @@ class Library extends React.Component {
         <ul className="mw6 center">
           {map(({ id, book, ...session }) => (
             <li key={id} className="list">
-              <LibraryItem {...book} session={session} />
+              <LibraryItem
+                {...book}
+                session={{ ...session, id, }}
+                finishSession={finishSession}
+              />
             </li>
           ))(books)}
         </ul>

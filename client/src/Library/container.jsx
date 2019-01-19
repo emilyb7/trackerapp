@@ -8,6 +8,15 @@ const mapStateToProps = state => ({
   ...prop('library')(state),
 })
 
-const mapDispatchToProps = { ...actions, }
+const mapDispatchToProps = dispatch => ({
+  fetchBooks: () => dispatch(actions.fetchBooks()),
+  finishSession: id =>
+    dispatch(actions.finishSession(id)).then(() =>
+      dispatch(actions.fetchBooks())
+    ),
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Library)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Library)
