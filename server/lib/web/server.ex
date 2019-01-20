@@ -3,9 +3,17 @@ defmodule Server do
   require Logger
 
   def get_protocol(:prod), do: :http
+  def get_protocol(:test), do: :http
   def get_protocol(_env), do: :https
 
   def get_options(:prod) do
+    [
+      otp_app: :tracker,
+      port: System.get_env("PORT") |> String.to_integer()
+    ]
+  end
+
+  def get_options(:test) do
     [
       otp_app: :tracker,
       port: System.get_env("PORT") |> String.to_integer()

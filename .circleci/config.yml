@@ -26,4 +26,4 @@ jobs:
       - run: cd server && mix deps.get
       - run: cd server && MIX_ENV="test" mix ecto.create
       - run: cd server && MIX_ENV="test" mix ecto.migrate
-      - run: cd server && mix test
+      - run: cd server && PORT=8080 mix test
