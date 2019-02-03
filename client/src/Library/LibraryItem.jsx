@@ -29,9 +29,11 @@ class LibraryItem extends React.Component {
             <h1 className="f6 f5-ns fw6 lh-title black mv0">{title}</h1>
             <dl className="mt2 f6">
               <dd className="ma0">{author}</dd>
-              <dd className="ma0">
-                Started: {format(session.started_at, 'Do MMM YYYY')}
-              </dd>
+              {session.started_at && (
+                <dd className="ma0">
+                  Started: {format(session.started_at, 'Do MMM YYYY')}
+                </dd>
+              )}
             </dl>
           </div>
           <button
