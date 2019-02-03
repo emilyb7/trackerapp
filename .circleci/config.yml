@@ -21,9 +21,9 @@ jobs:
       - checkout
 
       # specify any bash command here prefixed with `run: `
-      - run: cd server && mix local.hex --force
-      - run: cd server && mix local.rebar --force
-      - run: cd server && mix deps.get
-      - run: cd server && MIX_ENV="test" mix ecto.create
-      - run: cd server && MIX_ENV="test" mix ecto.migrate
-      - run: cd server && PORT=8080 mix test
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - run: mix deps.get
+      - run: MIX_ENV="test" mix ecto.create
+      - run: MIX_ENV="test" mix ecto.migrate
+      - run: PORT=8080 mix test

@@ -1,2 +1,2 @@
-web: cd server && mix run --no-halt
-release: cd server && mix ecto.migrate
+web: mix run --no-halt
+release: mix ecto.migrate
