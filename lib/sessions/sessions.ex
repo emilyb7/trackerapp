@@ -66,6 +66,7 @@ defmodule Tracker.Session do
             s in Session,
             where: is_nil(s.finished_at)
           )
+
         _ ->
           from(Session)
       end

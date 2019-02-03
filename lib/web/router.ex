@@ -54,14 +54,11 @@ defmodule Router do
             s = Tracker.Session.create(%{book_id: book_id, started_at: NaiveDateTime.utc_now()})
             send_resp(conn, 201, Poison.encode!(%{id: s}))
 
-
           nil ->
             {:ok, b} = Tracker.Book.create(conn.body_params)
-            s = Tracker.Session.create(%{book_id: b.id})
+            s = Tracker.Session.create(%{book_id: b.id, started_at: NaiveDateTime.utc_now()})
             send_resp(conn, 201, Poison.encode!(%{id: s}))
-
         end
-
 
       _ ->
         send_resp(conn, 400, "invalid payload")
